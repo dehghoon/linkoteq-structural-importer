@@ -1,0 +1,109 @@
+{
+  "project": "Linkoteq Universal Structural Model Importer",
+  "specificationVersion": "0.1.0-draft",
+  "date": "2026-10-28",
+  "currentStage": "GPT1_INITIAL_SPECIFICATION_DRAFT_READY_FOR_REVIEW",
+  "core": {
+    "schemaVersion": "0.5",
+    "inspectedMainCommit": "b1f25a6b735f4e3c586d4d8497298ebd6f656126",
+    "latestReleasedVersion": null,
+    "releaseEvidence": "releases=[]; matching-refs/tags=[]",
+    "compatibility": "proposed-not-runtime-verified"
+  },
+  "deliverables": [
+    "README.md",
+    "docs/CORE_IMPORT_GAP_ANALYSIS.md",
+    "docs/IFC_MAPPING_SPEC.md",
+    "docs/IMPORTER_ACCEPTANCE_TEST_MATRIX.md",
+    "docs/IMPORTER_ENGINEERING_SPEC.md",
+    "docs/OPEN_SOURCE_RESEARCH_AND_LICENSE_AUDIT.md",
+    "docs/PARALLEL_IMPLEMENTATION_PLAN.md",
+    "docs/PARSER_SEMANTICS_SPEC.md",
+    "docs/REPOSITORY_INSPECTION.md",
+    "docs/SOURCE_FORMAT_CAPABILITY_MATRIX.md",
+    "docs/SOURCE_PRESERVATION_SPEC.md",
+    "handoffs/gpt1-to-gpt2.md"
+  ],
+  "blockers": [
+    {
+      "id": "BASELINE",
+      "owner": "GPT-4",
+      "action": "Designate released/pinned Core baseline; no releases or tags observed",
+      "blocks": "Core promotion"
+    },
+    {
+      "id": "CORE_UNITS",
+      "owner": "GPT-4 / Core owner",
+      "action": "Approve geometry length/elevation and density/gravity boundary",
+      "blocks": "Core/IFC/analysis promotion"
+    },
+    {
+      "id": "VIEWER_DRIFT",
+      "owner": "GPT-3 / GPT-4",
+      "action": "Reconcile package pin and status pin; inspect active renderer and tests",
+      "blocks": "3D integration"
+    },
+    {
+      "id": "VENDOR_PROFILES",
+      "owner": "GPT-1 / GPT-2",
+      "action": "Pin CSI/STAAD version grammar and independent semantic oracles",
+      "blocks": "per-feature promotion"
+    },
+    {
+      "id": "CATALOG",
+      "owner": "GPT-1 / GPT-4",
+      "action": "Verify Canadian section catalog and built-up assemblies with license",
+      "blocks": "section promotion"
+    },
+    {
+      "id": "COMBINATIONS",
+      "owner": "GPT-1",
+      "action": "Verify SRSS GENERATE and other nonalgebraic operators",
+      "blocks": "combination promotion"
+    },
+    {
+      "id": "DEPENDENCIES",
+      "owner": "GPT-2 / GPT-3 / legal reviewer",
+      "action": "Approve exact dependencies, transitive SBOM, licenses and tests",
+      "blocks": "dependency adoption"
+    },
+    {
+      "id": "WRITE_REVIEW",
+      "owner": "User / GPT-4",
+      "action": "Approve complete additive diff against stated main base",
+      "blocks": "repository write"
+    },
+    {
+      "id": "PRODUCTION",
+      "owner": "GPT-3 / GPT-4 / GPT-5",
+      "action": "Limits, retention, access control, CI, security, deployment and smoke evidence",
+      "blocks": "Gate 4"
+    }
+  ],
+  "testEvidence": {
+    "documentQA": "passed: 9 requested specs + handoff present; 15 engineering-spec sections; JSON parsed; private sample details excluded; links/claims reviewed. No implementation tests run.",
+    "parserTests": "not-run",
+    "sourceSample": "private text inspected; bytes/hash/parser not verified",
+    "engineeringEquivalence": "not-verified",
+    "IFC": "not-generated"
+  },
+  "ciEvidence": null,
+  "deploymentEvidence": null,
+  "productionVerification": "NOT_PERFORMED",
+  "gates": {
+    "gate1": "infrastructure draft ready for review; semantic profiles blocked per capability",
+    "gate2": "not-met",
+    "gate3": "not-met",
+    "gate4": "not-met"
+  },
+  "nextPermittedStage": "Review initial infrastructure contract; GPT-2 archive/IR scaffolding and GPT-3 mocks/research; no ambiguous engineering promotion",
+  "publication": {
+    "repository": "dehghoon/linkoteq-structural-importer",
+    "branch": "main",
+    "prefix": "",
+    "baseCommit": null,
+    "baseState": "verified-empty-http-409",
+    "commit": null,
+    "status": "PENDING_EXACT_INITIAL_DIFF_APPROVAL"
+  }
+}
