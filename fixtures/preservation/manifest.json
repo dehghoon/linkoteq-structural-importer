@@ -1,0 +1,35 @@
+{
+  "fixtureVersion": "0.1.0",
+  "origin": "original synthetic specification fixture; not a private user model",
+  "file": "opaque-command.txt",
+  "encoding": "UTF-8 without BOM",
+  "newline": "LF",
+  "sha256": "a26520ed374ec7629b1dc45e81039e150248cd95869b3d547a5ac80394663988",
+  "byteLength": 72,
+  "scope": "preservation infrastructure only; no vendor syntax validity claimed",
+  "expected": {
+    "status": "preserved-only",
+    "physicalSpans": [
+      {
+        "ordinal": 0,
+        "startByte": 0,
+        "endByte": 72,
+        "kind": "opaque",
+        "id": "a26520ed374ec7629b1dc45e81039e150248cd95869b3d547a5ac80394663988:0:72"
+      }
+    ],
+    "logicalRecords": 0,
+    "semanticEntities": 0,
+    "stages": {
+      "preserved": "succeeded",
+      "parsed": "not-attempted",
+      "understood": "not-attempted",
+      "coreMapped": "not-attempted",
+      "visualized": "not-attempted",
+      "ifcExported": "not-attempted",
+      "analysisSupported": "not-attempted",
+      "equivalenceVerified": "not-attempted"
+    }
+  },
+  "executionEvidence": "not-run; expected values specified"
+}

@@ -30,3 +30,10 @@ GPT-4 must approve numeric retention, geographic storage and legal obligations b
 
 ## Acceptance
 Exact-byte recovery and SHA-256 equality; full nonoverlapping physical-span coverage; no missing unknown/comment records; deterministic IDs and reports excluding operational timestamps; idempotent retries; malformed source never executed; failure and deletion tests across every derivative. Archive success alone is never a conversion pass.
+
+## CSI provenance and repeated-record rules — amendment 0.1.1-draft
+
+Authoritative model headers and historical comment/log blocks have distinct contexts. A save-history program version, path or command string cannot override current model control records. Preserve private log bytes but redact source filesystem/client details from operational logs and public reports.
+For each vendor entity, retain all contributing records, ordered repeated scalar assignments, repeated child records and their conflicts. Build projections from this record ledger rather than replacing raw records with a keyed dictionary. Explicit zero, empty, absent and vendor sentinel values are distinct states. A Program Determined or Default token is not a computed value.
+Retain table-level unit metadata and late global-unit declarations independently of record order; provenance must identify the rule used to attach units. A file hash identifies this source snapshot only and is not a project-global entity identity. Duplicated GUIDs do not merge typed source IDs. Logical record counts exclude continuation fragments; table counts, record counts and engineering entity counts are separate report quantities.
+Retain case/pattern/combination graphs and physical/analytical/property/assignment relationships. Mark declarations as unreferenced only after all relevant reference classes have been inspected; otherwise use usage-unknown. Unsupported fields on a mapped object remain visible as partial semantics and may block analysis.

@@ -54,3 +54,30 @@ Benchmark 10³, 10⁴, 10⁵ and 10⁶ records within configured admission limit
 
 ## Gates
 Gate 1 per infrastructure/profile contract; Gate 2 requires executed fixtures/CI at exact commit; Gate 3 requires active viewer and independently inspected IFC; Gate 4 requires security, deployment, URL and representative production import/export. File change, commit, push, CI, deployment creation, health, URL and smoke test remain eight separate evidence entries.
+
+## CSI sample-specific acceptance additions — 0.1.1-draft
+
+The supplied private files are inspection evidence, not public fixtures. Hashes and observations are in CSI_SAMPLE_COVERAGE_AUDIT.md. All tests below are specified, not run against a production importer. Synthetic counterparts must retain the syntax risk without copying private model geometry/client information.
+
+| ID | Case | Required expected outcome |
+|---|---|---|
+| CSI-01 | private hashes/version/table inventories | exact hashes and inventory counts match audit; byte recovery exact; no claim entire original project was exported |
+| CSI-02 | ETABS point templates, assignments and top-down stories | scoped IDs; no implicit z=0 or all-story instantiation; verify vertical elevations using source oracle |
+| CSI-03 | adjacent quote/keyword, multi-record entities, opaque history | lexical tokens separate correctly; contributions retained; logged versions/commands cannot change model state |
+| CSI-04 | SAP units declared after geometry, plus conflicting-control negative fixture | two-pass resolution; no early default units; conflict blocks dependent mapping |
+| CSI-05 | SAP 2395 physical underscore continuations | every fragment retains byte/line provenance; no lost/repeated tokens; malformed continuation bounded |
+| CSI-06 | duplicate GUIDs and duplicate overwrite rows | distinct source IDs retained; all overwrite records preserved; identical vs conflicting classified without silent overwrite |
+| CSI-07 | pattern/case same name and multiple patterns per case | distinct source namespaces and factor graph; per-case derived load provenance; self-weight not double-counted |
+| CSI-08 | nested additive and envelope graphs, cycle and missing refs | validate graph; preserve operator types; only approved additive branches may flatten |
+| CSI-09 | relative/absolute station pairs, GRAV and projected loads | independent oracle verifies axis/sign/length interpretation; disagreement blocks mapping |
+| CSI-10 | UnitMass/UnitWeight plus zero density and modifiers | separate dimensions and source values; zero preserved; Core rho rule explicit |
+| CSI-11 | membrane/diaphragm/local springs/release labels | no MPC from name, no global spring assumed, no member release becoming node support |
+| CSI-12 | nonprismatic interpolation, component sections, thermal loads, offsets | full source semantics retained; canonical partial subset clearly labeled; affected analysis blocked |
+| CSI-13 | unused/default definitions and RunCase=No | preserved definitions and requested/executed distinction; no fabricated analysis/design result |
+
+### Synthetic mathematical oracles (not vendor validation)
+- Relative station r=0.25 on verified length L=4 m gives x=1 m. If accompanying absolute station is 2 m, report inconsistency rather than silently choosing one.
+- A pattern action P=10 N used in case C with scale 2 produces 20 N only when linear-static lowering is approved. Source pattern is retained; no extra unscaled 10 N is added to that same case.
+- C1=1.2A+0.8B; C2=2C1−0.4A algebraically gives 2A+1.6B. With A=10 and B=5, result is 28. This is a pure algebra test, not authorization for envelopes or nonlinear case sequence flattening.
+- A=10 and B=−20 have signed envelope [−20,10], not additive −10. Initial Core factor-only mapping must reject that operator.
+Expected values must be checked in dimensioned profile-specific fixtures before engineering promotion. Counts/checks in the audit are inspection evidence, not passed engine tests.

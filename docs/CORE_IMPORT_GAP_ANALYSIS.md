@@ -62,3 +62,19 @@ G-09 Core README says repository does not contain PyNite, while tree contains ad
 
 ## Promotion rule
 For each profile/feature pin source grammar evidence, rule ID, source units/axes, destination type/field, validation oracle, inverse limitations and owner approval. Map only dependency-closed subsets. A model containing unknown structural commands may be previewable but cannot be silently analyzed. No enhancement in this package modifies the canonical contract.
+
+## CSI-specific gap refinement — amendment 0.1.1-draft
+
+| Gap | Classification | Engineering rule |
+|---|---|---|
+| Pattern/case dependency graph | C/D; B only for approved linear-static lowering | preserve separate namespaces; canonical emitted loads per case retain pattern/factor provenance; never duplicate self-weight |
+| Nested combinations | C/D; B for verified linear-add flattening only | graph cycle/missing-reference check; envelope/SRSS cannot become scalar factors |
+| Membrane vs diaphragm constraint | C/D/E beyond exact Core subset | retain constraint axis/local system/membership separately from surface formulation and drilling DOF |
+| Nonprismatic segment/interpolation | C/D/E | EI22/EI33 interpolation independently retained; no arbitrary equivalent prismatic section |
+| Section Designer assemblies | C/D; B only when geometry/properties verified | multi-material/component/rotation/fiber definitions not inferred from aggregate properties |
+| Zero mass/weight modifiers | C/D/E where Core has no modifier | changing material density is not automatically equivalent; declared zeros cannot become defaults |
+| Local spring and release DOFs | B or C/D/E when coupling required | establish source local basis; Core global scalar springs cannot represent arbitrary coupling |
+| GUID conflicts and repeated metadata | C sidecar provenance | source typed ID identity; no destructive dedup; no Core GUID field invented |
+| ETABS story template identity | B pending source geometry rule | scoped instantiated nodes/members; no z=0 or all-story replication |
+
+G-10: general preservation coverage does not authorize these new mappings. Source profiles and acceptance examples are now available, but the Core baseline/units/density issues remain unresolved. Do not modify Core in the importer repository. GPT-4 must coordinate any canonical extensions.

@@ -1,8 +1,8 @@
 {
   "project": "Linkoteq Universal Structural Model Importer",
-  "specificationVersion": "0.1.0-draft",
+  "specificationVersion": "0.1.1-draft",
   "date": "2026-10-28",
-  "currentStage": "GPT1_INITIAL_SPECIFICATION_DRAFT_READY_FOR_REVIEW",
+  "currentStage": "GPT1_CSI_SAMPLES_REVIEWED_SPECIFICATION_AMENDMENT_PREPARED",
   "core": {
     "schemaVersion": "0.5",
     "inspectedMainCommit": "b1f25a6b735f4e3c586d4d8497298ebd6f656126",
@@ -13,16 +13,21 @@
   "deliverables": [
     "README.md",
     "docs/CORE_IMPORT_GAP_ANALYSIS.md",
+    "docs/CSI_SAMPLE_COVERAGE_AUDIT.md",
     "docs/IFC_MAPPING_SPEC.md",
     "docs/IMPORTER_ACCEPTANCE_TEST_MATRIX.md",
     "docs/IMPORTER_ENGINEERING_SPEC.md",
+    "docs/INITIAL_IMPLEMENTATION_CONTRACT.md",
     "docs/OPEN_SOURCE_RESEARCH_AND_LICENSE_AUDIT.md",
     "docs/PARALLEL_IMPLEMENTATION_PLAN.md",
     "docs/PARSER_SEMANTICS_SPEC.md",
     "docs/REPOSITORY_INSPECTION.md",
     "docs/SOURCE_FORMAT_CAPABILITY_MATRIX.md",
     "docs/SOURCE_PRESERVATION_SPEC.md",
-    "handoffs/gpt1-to-gpt2.md"
+    "fixtures/preservation/manifest.json",
+    "fixtures/preservation/opaque-command.txt",
+    "handoffs/gpt1-to-gpt2.md",
+    "handoffs/gpt1-to-gpt4.md"
   ],
   "blockers": [
     {
@@ -68,12 +73,6 @@
       "blocks": "dependency adoption"
     },
     {
-      "id": "WRITE_REVIEW",
-      "owner": "User / GPT-4",
-      "action": "Approve complete additive diff against stated main base",
-      "blocks": "repository write"
-    },
-    {
       "id": "PRODUCTION",
       "owner": "GPT-3 / GPT-4 / GPT-5",
       "action": "Limits, retention, access control, CI, security, deployment and smoke evidence",
@@ -85,25 +84,60 @@
     "parserTests": "not-run",
     "sourceSample": "private text inspected; bytes/hash/parser not verified",
     "engineeringEquivalence": "not-verified",
-    "IFC": "not-generated"
+    "IFC": "not-generated",
+    "syntheticFixture": "One original archival fixture with independently calculated byte hash/count; parser/engine tests not run.",
+    "csiInspection": {
+      "status": "source-inspection-only",
+      "ETABS": {
+        "version": "13.2.2",
+        "sha256": "0d6da147686f109ee3fe6c69bf7294a4ed237a17013c6715deb27709161bb21d",
+        "bytes": 280648,
+        "lines": 2482
+      },
+      "SAP2000": {
+        "version": "19.0.0",
+        "sha256": "8e31922f93485aaad44f6fae2288d29f2b9f68fdfcc158eab6af557917a5ff79",
+        "bytes": 1654573,
+        "lines": 12437,
+        "tables": 72,
+        "jointRecords": 388,
+        "frameRecords": 609,
+        "areaRecords": 2
+      },
+      "parserTests": "not-run",
+      "engineeringEquivalence": "not-verified"
+    }
   },
-  "ciEvidence": null,
+  "ciEvidence": {
+    "commit": "66675d5158000aaca4ffe80f2efc08504d2bdd44",
+    "workflowRuns": 0,
+    "status": "NOT_RUN"
+  },
   "deploymentEvidence": null,
   "productionVerification": "NOT_PERFORMED",
   "gates": {
-    "gate1": "infrastructure draft ready for review; semantic profiles blocked per capability",
+    "gate1": "Infrastructure contract and observed CSI profile rules specified; source-specific engineering transformations still require review and oracle tests.",
     "gate2": "not-met",
     "gate3": "not-met",
     "gate4": "not-met"
   },
-  "nextPermittedStage": "Review initial infrastructure contract; GPT-2 archive/IR scaffolding and GPT-3 mocks/research; no ambiguous engineering promotion",
+  "nextPermittedStage": "GPT-2 INF-01–INF-06 infrastructure and CSI source-IR prototypes/CSI-01–CSI-13 tests; GPT-3 mocks/research; GPT-4 baseline and integration decisions. No unsupported Core/IFC/analysis promotion.",
   "publication": {
     "repository": "dehghoon/linkoteq-structural-importer",
     "branch": "main",
     "prefix": "",
     "baseCommit": null,
     "baseState": "verified-empty-http-409",
-    "commit": null,
-    "status": "PENDING_EXACT_INITIAL_DIFF_APPROVAL"
+    "commit": "66675d5158000aaca4ffe80f2efc08504d2bdd44",
+    "status": "INITIAL_PACKAGE_PUBLISHED_AND_READBACK_VERIFIED",
+    "initializationCommit": "8b8f63d63e88ed7ae1b847c64965566c28888aa1",
+    "verifiedFileCount": 13
+  },
+  "pendingAmendment": {
+    "version": "0.1.1-draft",
+    "supersedes": "seven-file infrastructure continuation proposal",
+    "baseCommit": "66675d5158000aaca4ffe80f2efc08504d2bdd44",
+    "status": "PREPARED_FOR_EXACT_DIFF_REVIEW",
+    "privateSourceFilesIncluded": false
   }
 }

@@ -73,3 +73,21 @@ Material G is not explicitly supplied in the reviewed material declarations; E/n
 
 ## Minimum capability progression
 Start P0 for all three families concurrently. Build STAAD lexical context/geometry first using approved synthetic fixtures, but preserve assignment and command blocks immediately. Build CSI version-specific tables/blocks in parallel only after authentic licensed examples identify their grammar. P2 geometry cannot invent required Member material/section references. Partial nodes may map with member blocks diagnosed; source-only connectivity is inspectable until required properties resolve. Product claims must name source version and feature subset.
+
+## CSI observed profiles — amendment 0.1.1-draft
+
+Both full source byte streams were inspected; hashes and complete section/table inventories are in CSI_SAMPLE_COVERAGE_AUDIT.md. No runtime importer capability is claimed.
+
+| Feature | ETABS 13.2.2 .$et observation | SAP2000 19.0.0 .$2k observation | Target and gate |
+|---|---|---|---|
+| Header/units | early N/MM/C, historical versions inside log | late PROGRAM CONTROL KN/m/C; UnitsCurr=Yes | P1 two-pass/opaque-context tests; P2 field unit dictionaries |
+| Geometry | 2 point definitions, 1 line, story-scoped assignments | 388 joints, 609 frames, 2 areas | P1 inventories; P2 story/global axes verified |
+| Identity | scoped labels; repeated entity definition records | duplicate GUID groups and repeated overwrite rows | typed scoped IDs; preserve every contribution |
+| Loads | 4 line loads: POINTF/TRAPF, GRAV, relative stations | 1810 distributed and 579 temperature rows | static subset only after sign/unit/station proof; thermal C/D/E |
+| Cases/combinations | 18 patterns; 50 combo declarations incl. envelope and nested refs | 10 patterns, 11 cases, 48 combo names across 244 rows | preserve graph, operators, multiplicity and execution intent |
+| Diaphragm/surfaces | diaphragm/property definitions; assignment evidence separate | 151 joint constraints plus membrane areas | preserve separately; no automatic MPC from surface name |
+| Boundary | member PINNED plus separate point restraints | 180 release, 55 restraint and 55 spring rows | source local DOFs/end conventions before P2 |
+| Sections/offsets | custom sections/cardinal point/modifiers | nonprismatic, Section Designer, insertion/offset and rotation records | C/D/E for mechanics absent in Core |
+| Metadata/design | historical log, material curves and design preferences | code overwrites, dynamic functions, mesh/UI/default definitions | P0/P1 preservation; no claim of executed design or analysis |
+
+Counts are source inventory observations, not counts of successfully converted or validated engineering entities. The representative corpus now contains private STAAD, ETABS and SAP examples. Version coverage remains narrow; original files are not public test assets.
