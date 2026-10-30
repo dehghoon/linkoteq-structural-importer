@@ -130,7 +130,9 @@ def extract_geometry(archive: Archive) -> GeometryView:
             if source_id in joint_ids:
                 raise ArchiveError(f"SAP_DUPLICATE_JOINT_ID:{record.line}:{source_id}")
             joint_ids.add(source_id)
-            joints.append(Joint(source_id, _number(f,"x",record.line),
+            if f.get("coordtype", "Cartesian").casefold() != "cartesian" or f.get("coordsys", "GLOBAL").casefold() != "global":
+                raise ArchiveError(f"SAP_UNSUPPORTED_JOINT_COORDINATES:{record.line}")
+            joints.append(Joint(source_id, _number(f,"xorr",record.line),
                                 _number(f,"y",record.line), _number(f,"z",record.line),
                                 record.line))
         elif record.table == "CONNECTIVITY - FRAME":
