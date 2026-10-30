@@ -5,6 +5,8 @@ on:
   pull_request:
     paths:
       - 'src/linkoteq_importer/sap2000_geometry.py'
+      - 'src/linkoteq_importer/sap2000_properties.py'
+      - 'scripts/test_sap2000_properties_fixture.py'
       - 'scripts/test_sap2000_geometry_fixture.py'
       - 'docs/MTDENN~1.$2k'
       - '.github/workflows/sap2000-geometry.yml'
@@ -22,3 +24,5 @@ jobs:
           python-version: '3.12'
       - name: Run real SAP2000 geometry extraction
         run: PYTHONPATH=src python scripts/test_sap2000_geometry_fixture.py
+      - name: Run real SAP2000 material and section extraction
+        run: PYTHONPATH=src python scripts/test_sap2000_properties_fixture.py
