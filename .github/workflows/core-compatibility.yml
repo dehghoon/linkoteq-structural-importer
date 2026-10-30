@@ -1,0 +1,44 @@
+# Proposed workflow: install only after reviewing baseline and repository policy.
+name: Core compatibility drift (read only)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"
+permissions:
+  contents: read
+jobs:
+  core-drift:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout importer
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Checkout Core
+        uses: actions/checkout@v4
+        with:
+          repository: dehghoon/linkoteq-structural-core
+          path: core
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate approved baseline is configured
+        env:
+          BASELINE: ${{ vars.LINKOTEQ_APPROVED_CORE_COMMIT }}
+        run: |
+          if ! [[ "$BASELINE" =~ ^[a-f0-9]{40}$ ]]; then
+            echo "::error::Set LINKOTEQ_APPROVED_CORE_COMMIT to an approved immutable commit SHA"
+            exit 1
+          fi
+      - name: Compare Core with approved baseline
+        env:
+          BASELINE: ${{ vars.LINKOTEQ_APPROVED_CORE_COMMIT }}
+        run: |
+          CANDIDATE=$(git -C core rev-parse HEAD)
+          PYTHONPATH=src python scripts/check_core.py --core core --baseline "$BASELINE" --candidate "$CANDIDATE" --output core-drift-report.json
+      - name: Upload review report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-drift-report
+          path: core-drift-report.json
+          if-no-files-found: ignore
