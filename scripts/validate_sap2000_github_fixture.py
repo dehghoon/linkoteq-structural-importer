@@ -21,8 +21,8 @@ EXPECTED = {
     "continuation_lines": 2395,
     "program_control": 1,
 }
-HEADER = re.compile(r'^TABLE:\\s*"([^"]+)"$', re.I)
-FIELD = re.compile(r'([A-Za-z][A-Za-z0-9_]*)\\s*=\\s*(?:"(?:[^"]|"")*"|[^\\s"]+)')
+HEADER = re.compile(r'^TABLE:\s*"([^"]+)"$', re.I)
+FIELD = re.compile(r'([A-Za-z][A-Za-z0-9_]*)\s*=\s*(?:"(?:[^"]|"")*"|[^\s"]+)')
 
 
 def validate(path: Path) -> dict[str, object]:
