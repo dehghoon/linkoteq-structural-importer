@@ -8,6 +8,8 @@ on:
       - 'src/linkoteq_importer/sap2000_properties.py'
       - 'src/linkoteq_importer/sap2000_boundary.py'
       - 'src/linkoteq_importer/sap2000_loads.py'
+      - 'src/linkoteq_importer/sap2000_advanced_loads.py'
+      - 'scripts/test_sap2000_advanced_loads_fixture.py'
       - 'scripts/test_sap2000_boundary_load_fixture.py'
       - 'scripts/test_sap2000_boundary_load_known_answers.py'
       - 'scripts/test_sap2000_real_boundary_golden.py'
@@ -64,3 +66,5 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_risk_sampling.py
       - name: Run real SAP2000 boundary and load extraction
         run: PYTHONPATH=src python scripts/test_sap2000_boundary_load_fixture.py
+      - name: Run real SAP2000 distributed load and combination regression
+        run: PYTHONPATH=src python scripts/test_sap2000_advanced_loads_fixture.py
