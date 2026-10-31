@@ -50,6 +50,8 @@ jobs:
         run: PYTHONPATH=src python scripts/diagnose_sap2000_core_reference_gaps.py
       - name: Verify partial structural model preserves unresolved members
         run: PYTHONPATH=src python scripts/test_sap2000_partial_structural_model.py
+      - name: Verify partial model with supports and loads
+        run: PYTHONPATH=src python scripts/test_sap2000_partial_structural_actions.py
       - name: Verify Core property references
         run: PYTHONPATH=src python scripts/test_sap2000_core_property_references.py
       - name: Select material and section risk samples
