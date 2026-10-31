@@ -10,6 +10,7 @@ on:
       - 'src/linkoteq_importer/sap2000_loads.py'
       - 'scripts/test_sap2000_boundary_load_fixture.py'
       - 'scripts/test_sap2000_boundary_load_known_answers.py'
+      - 'scripts/test_sap2000_real_boundary_golden.py'
       - 'scripts/test_sap2000_properties_fixture.py'
       - 'scripts/test_sap2000_geometry_fixture.py'
       - 'scripts/test_sap2000_exact_geometry_fixture.py'
@@ -35,5 +36,7 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_properties_fixture.py
       - name: Verify exact synthetic boundary and load values
         run: PYTHONPATH=src python scripts/test_sap2000_boundary_load_known_answers.py
+      - name: Compare real SAP2000 boundary golden values
+        run: PYTHONPATH=src python scripts/test_sap2000_real_boundary_golden.py
       - name: Run real SAP2000 boundary and load extraction
         run: PYTHONPATH=src python scripts/test_sap2000_boundary_load_fixture.py
