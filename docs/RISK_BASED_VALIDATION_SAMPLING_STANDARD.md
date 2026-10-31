@@ -53,3 +53,7 @@ For each format/fixture/domain: source SHA, total records, applicable classes, c
 ## Current implementation status
 
 This is a **documented selection policy**, not an implemented generic scoring/sampling engine. Existing SAP2000 boundary golden test covers four joints and four frames; it does not meet all domain/format coverage criteria yet. ETABS/STAAD equivalents and full automatic selection reports are NOT_IMPLEMENTED. Do not claim the policy is operational until code and CI evidence exist.
+
+## Implementation progress (2026-10-31)
+
+Initial reusable selector implemented at `src/linkoteq_importer/risk_sampling.py`; real SAP2000 boundary adapter/test at `scripts/test_sap2000_risk_sampling.py`; CI workflow updated. The selector deterministically covers each observed class once and observed high-risk classes twice where possible, with deduplication and source-ID tie breaking. This is a **partial implementation**: pairwise interaction coverage, numeric boundary generation, negative-case generation, manifest JSON output, reviewed golden oracle selection, and adapters for geometry/loads/materials/ETABS/STAAD are NOT_IMPLEMENTED. Selection does not prove engineering correctness. CI status must be checked on the workflow run for commit `6f6f1a5` or newer before claiming PASS.
