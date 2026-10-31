@@ -10,7 +10,7 @@ on:
       - 'src/linkoteq_importer/sap2000_loads.py'
       - 'scripts/test_sap2000_boundary_load_fixture.py'
       - 'scripts/test_sap2000_properties_fixture.py'
-      - 'scripts/test_sap2000_geometry_fixture.py'
+      - 'scripts/test_sap2000_geometry_fixture.py'\n      - 'scripts/test_sap2000_exact_geometry_fixture.py'
       - 'docs/MTDENN~1.$2k'
       - '.github/workflows/sap2000-geometry.yml'
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
           python-version: '3.12'
       - name: Run real SAP2000 geometry extraction
         run: PYTHONPATH=src python scripts/test_sap2000_geometry_fixture.py
-      - name: Run real SAP2000 material and section extraction
+      - name: Compare every joint coordinate and frame connection with source\n        run: PYTHONPATH=src python scripts/test_sap2000_exact_geometry_fixture.py\n      - name: Run real SAP2000 material and section extraction
         run: PYTHONPATH=src python scripts/test_sap2000_properties_fixture.py
       - name: Run real SAP2000 boundary and load extraction
         run: PYTHONPATH=src python scripts/test_sap2000_boundary_load_fixture.py
