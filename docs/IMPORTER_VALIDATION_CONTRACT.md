@@ -57,3 +57,7 @@ This contract is documentation, not evidence of completed tests.
 ## Risk-based sample selection policy
 
 The normative project policy for choosing independently reviewed golden samples across all eight engineering domains and SAP2000/ETABS/STAAD.Pro is [RISK_BASED_VALIDATION_SAMPLING_STANDARD.md](RISK_BASED_VALIDATION_SAMPLING_STANDARD.md). It defines mandatory risk classes, deterministic minimum counts and reporting requirements. Full-record automated checks remain required; manual sample selection is not a substitute. The sampling engine is not yet implemented and must not be marked PASS solely because this document exists.
+
+## Updated priority decision (2026-10-31)
+
+See [SOURCE_VERSION_AND_CORE_FIRST_POLICY.md](SOURCE_VERSION_AND_CORE_FIRST_POLICY.md). Vendor-source compatibility checks are a **lightweight input gate**, not the primary validation workload. The principal engineering acceptance gate is **E4 source-to-Core semantic mapping**; E2 extraction regressions remain useful but do not constitute Core verification. Risk-sample selection tools remain optional diagnostics, not release-blocking evidence of mapping correctness. No unsupported numeric version cutoff may be invented. Existing E0-E3 and preservation safeguards remain in effect; the change is priority and scope, not permission to silently lose data.
