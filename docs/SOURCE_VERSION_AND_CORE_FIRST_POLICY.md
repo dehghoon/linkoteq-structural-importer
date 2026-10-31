@@ -19,3 +19,7 @@ Known incompatible legacy format -> UNSUPPORTED_FORMAT_VERSION with vendor conve
 
 ## Current implementation caveat
 SAP2000 geometry, properties, boundary and load extractors currently expose source views with mapped_to_core=False. Existing risk-sampling scripts are retained as optional diagnostics/regression tools, **not** Core mapping acceptance gates. No Core equivalence is yet claimed. Before implementing a hard version rejection in code, verify exact detectable source signature and regression fixtures for that format family; this document does not authorize arbitrary numeric thresholds.
+
+## Representative-version research update (2026-10-31)
+
+ETABS v13 (2013) is a **provisional historical candidate**: CSI's v13 release notes describe a major upgrade from v9.7.4; CSI's v16-to-v13 E2K procedure explicitly excludes v9 and earlier and warns about newer unsupported features. This does not prove all v13+ files work. STAAD.Pro continues to use STD command language across V8i/CONNECT/2024, but no defensible numeric cutoff or all-version semantic stability has been established. See [REPRESENTATIVE_VERSION_CORE_ACCEPTANCE_MATRIX.md](REPRESENTATIVE_VERSION_CORE_ACCEPTANCE_MATRIX.md) for three-cohort test targets per format and explicit Core mapping NOT_IMPLEMENTED gates. The earlier ETABS minimum-version uncertainty is **not** resolved into a production hard-reject rule.
