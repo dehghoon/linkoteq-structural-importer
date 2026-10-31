@@ -40,6 +40,8 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_properties_fixture.py
       - name: Verify Core v0.5 geometry fragment mapping
         run: PYTHONPATH=src python scripts/test_sap2000_core_geometry_fragment.py
+      - name: Verify Core property references
+        run: PYTHONPATH=src python scripts/test_sap2000_core_property_references.py
       - name: Select material and section risk samples
         run: PYTHONPATH=src python scripts/test_sap2000_properties_risk_sampling.py
       - name: Verify exact synthetic boundary and load values
