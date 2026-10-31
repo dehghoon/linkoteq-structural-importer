@@ -28,9 +28,11 @@ def source_material_to_si(entry:CatalogEntry, *,stress_unit:str,
     # This adapter requires a reviewed explicit schema and does not guess
     # aliases from unrelated material family definitions.
     e,g,nu=_required(f,"e1","g12","u12")
-    if "masspervol" in f:
+    if "unitmass" in f:
+        rho=f["unitmass"]
+    elif "masspervol" in f:
         rho=f["masspervol"]
-    elif "weightpervol" in f:
+    elif "unitweight" in f or "weightpervol" in f:
         raise ValueError("WEIGHT_DENSITY_REQUIRES_EXPLICIT_GRAVITY_CONVERSION")
     else:
         raise ValueError("MISSING_MASS_DENSITY")
