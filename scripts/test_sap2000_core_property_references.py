@@ -13,8 +13,7 @@ def run():
                CatalogEntry("Other",(("material","Other"),),5))
     sections=(CatalogEntry("W1",(("sectionname","W1"),("material","Steel")),6),)
     def props(assignments,hash="hash"):
-        return PropertyView(materials,sections,assignments,(),"",hash) if False else PropertyView(
-            materials,sections,assignments,(),(),hash)
+        return PropertyView(materials,sections,assignments,(),(),hash)
     a=FrameSectionAssignment("F","W1",None,7)
     out=bind_property_references(geometry,props((a,)))
     m=out["members"][0]
