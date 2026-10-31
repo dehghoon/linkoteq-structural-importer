@@ -15,7 +15,7 @@ def length_factor(declared_units: str | None) -> Decimal:
     if not declared_units:
         raise ValueError("UNDECLARED_SOURCE_UNITS")
     # CSI unit declarations are force_length_temperature, e.g. KN_m_C.
-    parts=declared_units.casefold().replace("-", "_").replace(",", "_").split("_")
+    parts=declared_units.casefold().replace("-", "_").replace(",", "_").replace(" ", "").split("_")
     matches=[part for part in parts if part in _LENGTH_TO_M]
     if len(matches)!=1:
         raise ValueError("UNSUPPORTED_LENGTH_UNITS:"+declared_units)
