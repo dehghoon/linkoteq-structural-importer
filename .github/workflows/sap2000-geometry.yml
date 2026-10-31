@@ -34,6 +34,8 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_geometry_fixture.py
       - name: Compare every joint coordinate and frame connection with source
         run: PYTHONPATH=src python scripts/test_sap2000_exact_geometry_fixture.py
+      - name: Select risk-based joint and frame samples
+        run: PYTHONPATH=src python scripts/test_sap2000_geometry_risk_sampling.py
       - name: Run real SAP2000 material and section extraction
         run: PYTHONPATH=src python scripts/test_sap2000_properties_fixture.py
       - name: Verify exact synthetic boundary and load values
