@@ -1,0 +1,70 @@
+name: SAP2000 engineering geometry fixture
+on:
+  push:
+    branches: [gpt2/sap2000-engineering-geometry]
+  pull_request:
+    paths:
+      - 'src/linkoteq_importer/sap2000_geometry.py'
+      - 'src/linkoteq_importer/sap2000_properties.py'
+      - 'src/linkoteq_importer/sap2000_boundary.py'
+      - 'src/linkoteq_importer/sap2000_loads.py'
+      - 'src/linkoteq_importer/sap2000_advanced_loads.py'
+      - 'scripts/test_sap2000_advanced_loads_fixture.py'
+      - 'scripts/test_sap2000_boundary_load_fixture.py'
+      - 'scripts/test_sap2000_boundary_load_known_answers.py'
+      - 'scripts/test_sap2000_real_boundary_golden.py'
+      - 'scripts/test_sap2000_risk_sampling.py'
+      - 'src/linkoteq_importer/risk_sampling.py'
+      - 'scripts/test_sap2000_properties_fixture.py'
+      - 'scripts/test_sap2000_geometry_fixture.py'
+      - 'scripts/test_sap2000_exact_geometry_fixture.py'
+      - 'docs/MTDENN~1.$2k'
+      - '.github/workflows/sap2000-geometry.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run real SAP2000 geometry extraction
+        run: PYTHONPATH=src python scripts/test_sap2000_geometry_fixture.py
+      - name: Compare every joint coordinate and frame connection with source
+        run: PYTHONPATH=src python scripts/test_sap2000_exact_geometry_fixture.py
+      - name: Select risk-based joint and frame samples
+        run: PYTHONPATH=src python scripts/test_sap2000_geometry_risk_sampling.py
+      - name: Run real SAP2000 material and section extraction
+        run: PYTHONPATH=src python scripts/test_sap2000_properties_fixture.py
+      - name: Verify Core v0.5 geometry fragment mapping
+        run: PYTHONPATH=src python scripts/test_sap2000_core_geometry_fragment.py
+      - name: Verify Core dimensional material and section conversions
+        run: PYTHONPATH=src python scripts/test_sap2000_core_property_values.py
+      - name: Verify SAP2000 source field mapping to SI
+        run: PYTHONPATH=src python scripts/test_sap2000_core_property_fields.py
+      - name: Inventory real SAP2000 property conversion coverage
+        run: PYTHONPATH=src python scripts/report_sap2000_real_core_property_coverage.py
+      - name: Diagnose real SAP2000 member and material gaps
+        run: PYTHONPATH=src python scripts/diagnose_sap2000_core_reference_gaps.py
+      - name: Verify partial structural model preserves unresolved members
+        run: PYTHONPATH=src python scripts/test_sap2000_partial_structural_model.py
+      - name: Verify partial model with supports and loads
+        run: PYTHONPATH=src python scripts/test_sap2000_partial_structural_actions.py
+      - name: Verify Core property references
+        run: PYTHONPATH=src python scripts/test_sap2000_core_property_references.py
+      - name: Select material and section risk samples
+        run: PYTHONPATH=src python scripts/test_sap2000_properties_risk_sampling.py
+      - name: Verify exact synthetic boundary and load values
+        run: PYTHONPATH=src python scripts/test_sap2000_boundary_load_known_answers.py
+      - name: Compare real SAP2000 boundary golden values
+        run: PYTHONPATH=src python scripts/test_sap2000_real_boundary_golden.py
+      - name: Select deterministic risk-based boundary samples
+        run: PYTHONPATH=src python scripts/test_sap2000_risk_sampling.py
+      - name: Run real SAP2000 boundary and load extraction
+        run: PYTHONPATH=src python scripts/test_sap2000_boundary_load_fixture.py
+      - name: Run real SAP2000 distributed load and combination regression
+        run: PYTHONPATH=src python scripts/test_sap2000_advanced_loads_fixture.py
