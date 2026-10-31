@@ -48,6 +48,8 @@ jobs:
         run: PYTHONPATH=src python scripts/report_sap2000_real_core_property_coverage.py
       - name: Diagnose real SAP2000 member and material gaps
         run: PYTHONPATH=src python scripts/diagnose_sap2000_core_reference_gaps.py
+      - name: Verify partial structural model preserves unresolved members
+        run: PYTHONPATH=src python scripts/test_sap2000_partial_structural_model.py
       - name: Verify Core property references
         run: PYTHONPATH=src python scripts/test_sap2000_core_property_references.py
       - name: Select material and section risk samples
