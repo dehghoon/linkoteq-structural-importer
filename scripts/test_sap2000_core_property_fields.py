@@ -5,7 +5,7 @@ from linkoteq_importer.sap2000_core_property_fields import source_material_to_si
 
 def run():
     mat=CatalogEntry("S",(("E1","200"),("G12","80"),("U12","0.3"),
-                          ("MassPerVol","7850")),1)
+                          ("UnitMass","7850")),1)
     m=source_material_to_si(mat,stress_unit="GPa",density_unit="kg/m3")
     assert Decimal(m["E"])==200000000000 and Decimal(m["rho"])==7850
     sec=CatalogEntry("W",(("Area","1000"),("I22","1000000"),
@@ -14,7 +14,7 @@ def run():
     assert Decimal(s["A"])==Decimal("0.001")
     assert Decimal(s["Iy"])==Decimal("0.000001")
     bad=CatalogEntry("S",(("E1","200"),("G12","80"),("U12","0.3"),
-                          ("WeightPerVol","77")),3)
+                          ("UnitWeight","77")),3)
     try:source_material_to_si(bad,stress_unit="GPa",density_unit="kg/m3")
     except ValueError as e:assert "WEIGHT_DENSITY" in str(e)
     else:raise AssertionError("weight density incorrectly treated as mass")
