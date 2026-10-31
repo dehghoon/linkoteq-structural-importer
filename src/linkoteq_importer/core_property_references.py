@@ -31,7 +31,7 @@ def bind_property_references(geometry:GeometryView, properties:PropertyView)->di
             unresolved.append("UNKNOWN_SECTION:"+source+":"+a.section_id)
             continue
         member["sectionId"]="sap2000:section:"+a.section_id
-        section_fields=dict(section.fields)
+        section_fields={k.casefold():v for k,v in section.fields}
         material_id=a.material_override or next(
             (v for k,v in section_fields.items() if k.casefold()=="material"),None)
         if not material_id or material_id not in materials:
