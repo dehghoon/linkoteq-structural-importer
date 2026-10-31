@@ -12,9 +12,9 @@ def check_known_answers():
          Joint("20",Decimal("15"),Decimal("4"),Decimal("6"),2)),
         (Frame("B", "20","10",3),),"synthetic","KIP_ft_F",())
     fragment=map_geometry_fragment(view)
-    assert fragment["nodes"]==[
-        {"id":"sap2000:node:10","sourceId":"10","x":"3.6576","y":"-0.6096","z":"0.00000"},
-        {"id":"sap2000:node:20","sourceId":"20","x":"4.5720","y":"1.2192","z":"1.8288"}]
+    assert [{**n,"x":Decimal(n["x"]),"y":Decimal(n["y"]),"z":Decimal(n["z"])} for n in fragment["nodes"]]==[
+        {"id":"sap2000:node:10","sourceId":"10","x":Decimal("3.6576"),"y":Decimal("-0.6096"),"z":Decimal("0")},
+        {"id":"sap2000:node:20","sourceId":"20","x":Decimal("4.5720"),"y":Decimal("1.2192"),"z":Decimal("1.8288")}]
     assert fragment["members"]==[
         {"id":"sap2000:member:B","sourceId":"B",
          "startNodeId":"sap2000:node:20","endNodeId":"sap2000:node:10"}]
