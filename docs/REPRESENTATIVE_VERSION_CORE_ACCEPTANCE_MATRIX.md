@@ -24,3 +24,7 @@ These are **cohorts for collecting representative files**, not a statement that 
 
 ## Current actual evidence
 SAP2000 pinned real text fixture has 388 joints, 609 frames and 84 sections and has passed source-level geometry regression; **not Core mapping**. No representative-version ETABS or STAAD fixture and no Core adapter evidence has been verified here. Next engineering action: confirm latest released Structural Core contract and implement a minimal Core adapter for geometry with G1 independently reviewed golden values before expanding to M1/B1/L1. The version policy and matrix are documentation, not proof of Core compatibility.
+
+## First implementation: SAP2000 geometry fragment (2026-10-31)
+
+`src/linkoteq_importer/core_geometry_fragment.py` creates a **Core v0.5-aligned geometry fragment**, with global nodes in metres, stable namespaced IDs and start/end member connectivity; rejects unknown length units and dangling references. `scripts/test_sap2000_core_geometry_fragment.py` tests synthetic feet-to-metres known answers, reversed I/J, failure cases and all 388/609 real geometry records. The workflow runs this test. **This is not a complete Core Structural Model**: material/section references and member semantics remain unresolved; `mapped_to_core=False` is intentional. G1 is PARTIAL pending actual canonical schema integration and independent reviewed oracle. Other G1 version cohorts and M1/B1/L1/C1/F1 remain NOT_IMPLEMENTED. Do not claim E4 PASS.
