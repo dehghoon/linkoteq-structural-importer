@@ -25,3 +25,7 @@ All cases above passed as hand-authored synthetic known-answer or negative tests
 For ETABS and STAAD.Pro, reuse these semantic case categories with format-specific syntax and independently reviewed expected values.
 
 Documentation completion gate: every newly implemented test must have a stable ID, expected behavior, evidence level, CI result URL, limitations and cross-format applicability recorded in the same PR before claiming the work is documented.
+
+## Real-source boundary golden case (2026-10-31)
+
+SAP-BND-REAL-001: On pinned fixture `docs/MTDENN~1.$2k` (SHA256 `8e31922f93485aaad44f6fae2288d29f2b9f68fdfcc158eab6af557917a5ff79`), joints 51,53,57,59 have restraints (Yes,Yes,Yes,No,No,No) and Local spring stiffness (0,0,0,40000,40000,0); frames 112,131,137,138 have releases (No,No,No,No,Yes,Yes,No,No,No,No,Yes,Yes). Values transcribed from the source tables. Executable: `scripts/test_sap2000_real_boundary_golden.py`; CI: `.github/workflows/sap2000-geometry.yml`. Status: PENDING CI at registration. This tests source extraction only, not local-axis transformation or independently verified SAP2000 vendor equivalence. Further full-record coverage remains outstanding.
