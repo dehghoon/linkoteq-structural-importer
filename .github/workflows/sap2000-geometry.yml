@@ -44,6 +44,8 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_core_property_values.py
       - name: Verify SAP2000 source field mapping to SI
         run: PYTHONPATH=src python scripts/test_sap2000_core_property_fields.py
+      - name: Inventory real SAP2000 property conversion coverage
+        run: PYTHONPATH=src python scripts/report_sap2000_real_core_property_coverage.py
       - name: Verify Core property references
         run: PYTHONPATH=src python scripts/test_sap2000_core_property_references.py
       - name: Select material and section risk samples
