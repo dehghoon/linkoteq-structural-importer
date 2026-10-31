@@ -53,3 +53,7 @@ For every PR that changes parser behavior or discovers a new format case: update
 SAP2000: structural and basic engineering extraction smoke tests exist. Exact geometry source comparison was added; its CI result is not asserted here. No independent vendor oracle, full load/section semantics, Core mapping or IFC equivalence is verified.
 ETABS and STAAD.Pro: comparable contract-based engineering suites are not yet implemented.
 This contract is documentation, not evidence of completed tests.
+
+## Risk-based sample selection policy
+
+The normative project policy for choosing independently reviewed golden samples across all eight engineering domains and SAP2000/ETABS/STAAD.Pro is [RISK_BASED_VALIDATION_SAMPLING_STANDARD.md](RISK_BASED_VALIDATION_SAMPLING_STANDARD.md). It defines mandatory risk classes, deterministic minimum counts and reporting requirements. Full-record automated checks remain required; manual sample selection is not a substitute. The sampling engine is not yet implemented and must not be marked PASS solely because this document exists.
