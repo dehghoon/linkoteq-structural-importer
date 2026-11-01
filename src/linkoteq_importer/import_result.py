@@ -44,7 +44,7 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
                        "frameSectionAssignments":[],"restraints":[],"springs":[],
                        "releases":[],"loadPatterns":[],"nodalLoads":[],
                        "distributedFrameLoads":[],"loadCases":[],
-                       "loadCombinations":[],"diaphragms":[],"diaphragmMemberships":[],"frameAxisRotations":[],"frameInsertions":[]},
+                       "loadCombinations":[],"diaphragms":[],"diaphragmMemberships":[],"frameAxisRotations":[],"frameInsertions":[],"frameEndReleaseSemantics":[]},
         "capabilities":{},
         "diagnostics":[],
         "fidelity":{"originalBytesPreserved":True,"engineeringEquivalenceVerified":False,
@@ -69,6 +69,8 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
         reference_audit=audit_references(archive)
         from .sap2000_frame_axes import extract_frame_axes
         axes=extract_frame_axes(archive)
+        from .sap2000_release_semantics import interpret_release
+        release_semantics=[interpret_release(release,axes) for release in b.releases]
         profile="sap2000-tables"
         view["nodes"]=[{**_source_ref(archive,"node",j.source_id,j.source_line,profile),
                         "coordinatesSourceUnits":[str(j.x),str(j.y),str(j.z)]} for j in g.joints]
@@ -107,6 +109,15 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
                     return value
                 record["sourceFields"]=normalize(record["sourceFields"])
                 view[name].append(record)
+        for item in release_semantics:
+            view["frameEndReleaseSemantics"].append({
+                **_source_ref(archive,"release_semantics",item.frame_id,item.source_line,profile),
+                "frameSourceId":item.frame_id,
+                "startReleaseLocal":item.start,
+                "endReleaseLocal":item.end,
+                "localAxisAngleDegrees":item.local_axis_angle_degrees,
+                "status":item.status,
+                "warnings":list(item.warnings)})
         result["sourceUnitsDeclaration"]=g.declared_units
         diagnostics.extend(g.diagnostics+p.diagnostics+b.diagnostics+l.diagnostics+a.diagnostics+d.diagnostics+axes.diagnostics+reference_audit.diagnostics)
         result["referenceAudit"]={"counts":reference_audit.counts,
@@ -120,6 +131,7 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
             "loads":"partial-source-view",
             "diaphragms":"parsed-source-view-not-core-mapped",
             "frameLocalAxes":"source-angle-only-not-transformed",
+            "endReleaseSemantics":"six-local-dof-source-view-not-core-mapped",
             "coreMapping":"not-attempted"}
         stage["parsed"]="partial"
     elif format=="staad":

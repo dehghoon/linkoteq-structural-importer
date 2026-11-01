@@ -28,3 +28,9 @@ SAP2000 source tables `CONSTRAINT DEFINITIONS - DIAPHRAGM` and `JOINT CONSTRAINT
 
 ## Frame local-axis source views (2026-11-01)
 SAP2000 `FRAME LOCAL AXES ASSIGNMENTS 1 - TYPICAL` and `FRAME INSERTION POINT ASSIGNMENTS` now feed `sourceViews.frameAxisRotations` and `sourceViews.frameInsertions`. CI PASS: https://github.com/dehghoon/linkoteq-structural-importer/actions/runs/41310751406 . Angles remain source degrees; insertion fields remain original key/value pairs. End-release DOF flags remain in source-local semantics, NOT global/ Core transformed. GPT-3 must not infer local 2/3 direction or pinned behavior without validated member axis transformation.
+
+## GPT-3 compatibility update — local axes and six-DOF releases
+See `docs/IMPORT_RESULT_LOCAL_AXES_RELEASE_COMPATIBILITY.md` on `gpt2/local-axes-release-contract` for exact source-view JSON, field mapping, synthetic rotated-beam fixture, acceptance tests, unresolved Core Gap CG-003, and supported/preserved-only distinctions. The new `frameEndReleaseSemantics` is a **source-local interpretation**, NOT an approved Core serializer. Read this branch explicitly: files are absent from `main`. Never infer global R2/R3 or analysis equivalence from source flags alone.
+
+## Shared three-vendor transport contract — 2026-11-01
+Read `docs/SOURCE_SEMANTIC_CONVERTER_MATRIX.md` and `src/linkoteq_importer/import_result_contract.py` on this branch. The `scripts/test_import_result_contract_all_formats.py` regression checks shared v0.1.0 envelopes for SAP2000, ETABS and STAAD using **explicitly synthetic inputs**, rejects incompatible versions, and does not certify ETABS/STAAD semantic conversion. GPT-3 should reject incompatible envelopes and must not interpret empty sourceViews as an absence of source features. `coreModel: null` means no canonical engineering model is yet validated. Run CI before claiming PASS.
