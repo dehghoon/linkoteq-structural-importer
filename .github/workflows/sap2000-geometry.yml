@@ -12,6 +12,8 @@ on:
       - 'src/linkoteq_importer/import_result.py'
       - 'src/linkoteq_importer/sap2000_diaphragms.py'
       - 'src/linkoteq_importer/sap2000_reference_audit.py'
+      - 'src/linkoteq_importer/sap2000_frame_axes.py'
+      - 'scripts/test_sap2000_frame_axes_fixture.py'
       - 'scripts/test_sap2000_reference_audit.py'
       - 'scripts/test_sap2000_diaphragm_fixture.py'
       - 'scripts/test_sap2000_diaphragm_invalid_references.py'
@@ -83,3 +85,5 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_diaphragm_invalid_references.py
       - name: Verify SAP2000 release and load reference audit
         run: PYTHONPATH=src python scripts/test_sap2000_reference_audit.py
+      - name: Verify SAP2000 frame local axes and releases
+        run: PYTHONPATH=src python scripts/test_sap2000_frame_axes_fixture.py
