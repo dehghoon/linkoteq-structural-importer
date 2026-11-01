@@ -9,6 +9,8 @@ on:
       - 'src/linkoteq_importer/sap2000_boundary.py'
       - 'src/linkoteq_importer/sap2000_loads.py'
       - 'src/linkoteq_importer/sap2000_advanced_loads.py'
+      - 'src/linkoteq_importer/import_result.py'
+      - 'scripts/test_import_result_fixture.py'
       - 'scripts/test_sap2000_advanced_loads_fixture.py'
       - 'scripts/test_sap2000_boundary_load_fixture.py'
       - 'scripts/test_sap2000_boundary_load_known_answers.py'
@@ -68,3 +70,5 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_boundary_load_fixture.py
       - name: Run real SAP2000 distributed load and combination regression
         run: PYTHONPATH=src python scripts/test_sap2000_advanced_loads_fixture.py
+      - name: Verify versioned Import Result contract
+        run: PYTHONPATH=src python scripts/test_import_result_fixture.py
