@@ -87,7 +87,7 @@ def extract_advanced_loads(archive: Archive) -> AdvancedLoadView:
             else:
                 diagnostics.append(f"UNSUPPORTED_DISTANCE_TYPE:{record.line}:{distance_type}")
                 continue
-            distributed.append(DistributedFrameLoad(
+            if "foverla" not in f or "foverlb" not in f:\n                diagnostics.append(f"DISTRIBUTED_LOAD_MAGNITUDE_UNSUPPORTED:{record.line}")\n                continue\n            distributed.append(DistributedFrameLoad(
                 frame, pattern, system, load_type, direction, distance_type,
                 _number(f, a, record.line), _number(f, b, record.line),
                 _number(f, "foverla", record.line), _number(f, "foverlb", record.line),
