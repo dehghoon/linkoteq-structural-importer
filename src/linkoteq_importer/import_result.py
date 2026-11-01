@@ -85,7 +85,7 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
                 record={**_source_ref(archive,kind,str(sid),line,profile),
                         "sourceFields":{k:v for k,v in vars(item).items()
                                         if k not in ("source_line","source_lines")}}
-                # Decimal is serialized as exact source text, not floating point.
+                if kind in ("nodal_load","distributed_load","frame_section_assignment"):\n                    record["id"]=entity_id(archive.namespace,profile,kind,str(sid),str(line)+":"+str(index))\n                # Decimal is serialized as exact source text, not floating point.
                 def normalize(value):
                     from decimal import Decimal
                     if isinstance(value,Decimal):return str(value)
