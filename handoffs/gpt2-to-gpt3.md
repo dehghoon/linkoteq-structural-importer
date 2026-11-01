@@ -25,3 +25,6 @@ SAP2000 source tables `CONSTRAINT DEFINITIONS - DIAPHRAGM` and `JOINT CONSTRAINT
 
 ## Source reference validation (2026-11-01)
 `Import Result.referenceAudit` reports source-reference diagnostics for restraints, springs, end releases, nodal loads, distributed frame loads, and diaphragm memberships. No repair/defaulting is performed. CI PASS on real pinned SAP fixture and synthetic invalid references: https://github.com/dehghoon/linkoteq-structural-importer/actions/runs/41310588128 . This validates identifier existence only, not member local-axis semantics, units, Core schema, or structural analysis equivalence.
+
+## Frame local-axis source views (2026-11-01)
+SAP2000 `FRAME LOCAL AXES ASSIGNMENTS 1 - TYPICAL` and `FRAME INSERTION POINT ASSIGNMENTS` now feed `sourceViews.frameAxisRotations` and `sourceViews.frameInsertions`. CI PASS: https://github.com/dehghoon/linkoteq-structural-importer/actions/runs/41310751406 . Angles remain source degrees; insertion fields remain original key/value pairs. End-release DOF flags remain in source-local semantics, NOT global/ Core transformed. GPT-3 must not infer local 2/3 direction or pinned behavior without validated member axis transformation.
