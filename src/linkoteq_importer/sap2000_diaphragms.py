@@ -56,7 +56,17 @@ def extract_diaphragms(archive: Archive) -> DiaphragmView:
             if not joint or not constraint:
                 raise ArchiveError(f"SAP_INCOMPLETE_JOINT_CONSTRAINT:{record.line}")
             memberships.append(DiaphragmMembership(joint,constraint,record.line))
+    from .sap2000_geometry import extract_geometry
+    geometry=extract_geometry(archive)
+    joint_ids={joint.source_id for joint in geometry.joints}
+    membership_keys=set()
     for member in memberships:
+        key=(member.joint_id,member.diaphragm_id)
+        if key in membership_keys:
+            diagnostics.append(f"DUPLICATE_JOINT_CONSTRAINT_ASSIGNMENT:{member.source_line}:{member.joint_id}:{member.diaphragm_id}")
+        membership_keys.add(key)
+        if member.joint_id not in joint_ids:
+            diagnostics.append(f"DIAPHRAGM_MEMBERSHIP_UNKNOWN_JOINT:{member.source_line}:{member.joint_id}")
         if member.diaphragm_id not in seen:
             diagnostics.append(f"JOINT_CONSTRAINT_NOT_DIAPHRAGM_DEFINITION:{member.source_line}:{member.diaphragm_id}")
     return DiaphragmView(tuple(definitions),tuple(memberships),
