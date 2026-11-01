@@ -15,6 +15,8 @@ on:
       - 'src/linkoteq_importer/sap2000_frame_axes.py'
       - 'src/linkoteq_importer/sap2000_release_semantics.py'
       - 'scripts/test_sap2000_release_semantics.py'
+      - 'src/linkoteq_importer/import_result_contract.py'
+      - 'scripts/test_import_result_contract_all_formats.py'
       - 'scripts/test_sap2000_frame_axes_fixture.py'
       - 'scripts/test_sap2000_reference_audit.py'
       - 'scripts/test_sap2000_diaphragm_fixture.py'
@@ -91,3 +93,5 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_frame_axes_fixture.py
       - name: Verify synthetic rotated beam I/J release semantics
         run: PYTHONPATH=src python scripts/test_sap2000_release_semantics.py
+      - name: Validate all three vendor Import Result envelopes
+        run: PYTHONPATH=src:scripts python scripts/test_import_result_contract_all_formats.py
