@@ -7,7 +7,7 @@ Baseline: Structural Core released tag v0.5.0; merged Core Gap Register `docs/CO
 
 The importer-owned transport envelope is `contract=linkoteq.import-result`, `version=0.1.0`, `coreContract=v0.5.0`. It includes `source` (archive hash, byte count, filename), `sourceViews`, `stages`, `capabilities`, `diagnostics`, `fidelity`, and `coreModel=null`.
 
-- SAP2000: source-view joints/frames, materials/sections, frame section assignments, restraints, springs, releases, patterns, nodal loads, selected distributed loads, cases, combinations. Diaphragms remain preserved-only. Unsupported distributed-load variants remain in source archive with diagnostic, not interpreted as zeros.
+- SAP2000: source-view joints/frames, materials/sections, frame section assignments, restraints, springs, releases, patterns, nodal loads, selected distributed loads, cases, combinations. Diaphragm definitions and joint memberships are now extracted into source views; no Core promotion or rigid/semi-rigid behavioral equivalence claim. Unsupported distributed-load variants remain in source archive with diagnostic, not interpreted as zeros.
 - STAAD: source-view nodes/frames via existing lexical and geometry parser, explicit units retained per node. Other engineering features preserved-only.
 - ETABS: preservation-only; engineering parser not connected. No invented nodes, members or property values.
 - Stable IDs use existing `entity_id` algorithm with namespace, source profile, entity kind and source identifier; repeated assignment/load records use source line plus record ordinal scope.
@@ -19,3 +19,6 @@ Treat `sourceViews` as read-only importer evidence and a partial preview, **not*
 
 ## Integration gate
 Agree on JSON schema, capability states, byte provenance for records, unit conversion/orientation, diaphragm semantics and security/auth boundaries. Only promote `coreModel` when mapping and Core validation pass. Test SAP, ETABS and STAAD samples and regression CI; avoid claiming readiness from the partial contract.
+
+## Diaphragm regression (2026-11-01)
+SAP2000 source tables `CONSTRAINT DEFINITIONS - DIAPHRAGM` and `JOINT CONSTRAINT ASSIGNMENTS` now feed `sourceViews.diaphragms` and `sourceViews.diaphragmMemberships`. Verified GitHub Actions PASS: https://github.com/dehghoon/linkoteq-structural-importer/actions/runs/41310243381 . Area membrane sections are separate and not inferred to be diaphragm constraints. Source joint IDs and source line provenance are retained. Consumer must not treat source view as a Core diaphragm until contract semantics are validated.
