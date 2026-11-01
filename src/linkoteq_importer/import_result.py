@@ -65,6 +65,8 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
         a=extract_advanced_loads(archive)
         from .sap2000_diaphragms import extract_diaphragms
         d=extract_diaphragms(archive)
+        from .sap2000_reference_audit import audit_references
+        reference_audit=audit_references(archive)
         profile="sap2000-tables"
         view["nodes"]=[{**_source_ref(archive,"node",j.source_id,j.source_line,profile),
                         "coordinatesSourceUnits":[str(j.x),str(j.y),str(j.z)]} for j in g.joints]
@@ -102,7 +104,11 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
                 record["sourceFields"]=normalize(record["sourceFields"])
                 view[name].append(record)
         result["sourceUnitsDeclaration"]=g.declared_units
-        diagnostics.extend(g.diagnostics+p.diagnostics+b.diagnostics+l.diagnostics+a.diagnostics+d.diagnostics)
+        diagnostics.extend(g.diagnostics+p.diagnostics+b.diagnostics+l.diagnostics+a.diagnostics+d.diagnostics+reference_audit.diagnostics)
+        result["referenceAudit"]={"counts":reference_audit.counts,
+                                  "diagnostics":list(reference_audit.diagnostics),
+                                  "validatedAgainstSourceGeometry":True,
+                                  "coreMappingValidated":False}
         result["capabilities"]={
             "geometry":"parsed-source-view",
             "properties":"parsed-source-view",
