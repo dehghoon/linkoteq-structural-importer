@@ -151,7 +151,7 @@
       "STAAD": "partial geometry source view; remaining engineering preserved only",
       "ETABS": "preservation only; parser not connected"
     },
-    "ci": "pending latest run; do not claim PASS until checked",
+    "ci": "PASS: GitHub Actions run 41310115447 on commit fe3d66ff03a1ef674db27a1538b4ec4f2f9f23aa; includes real SAP fixture, Import Result determinism and ETABS preserved-only test",
     "limitations": [
       "source-level records not canonical SI",
       "no full byte-span provenance per semantic record",
@@ -161,6 +161,7 @@
     "coordination": {
       "modelPR5": "merged 24b526873e3148e5f149ab2ab68b2e92ac221b3d",
       "coreGapPR5": "merged 2787faf13c2926c8f23151e49b93d625f7375b57"
-    }
+    },
+    "lastVerifiedRun": "https://github.com/dehghoon/linkoteq-structural-importer/actions/runs/41310115447"
   }
 }
