@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.1.0",
+  "case_id": "REPLACE_ME",
+  "format": "SAP2000|ETABS|STAAD",
+  "source_application": "",
+  "source_version": "",
+  "source_file": "",
+  "source_commit": "",
+  "sha256": "",
+  "encoding": "",
+  "declared_units": "",
+  "unit_changes": [],
+  "access_permission": "",
+  "oracle": {
+    "type": "manual-reviewed|vendor-export|independent-validated",
+    "reference": "",
+    "reviewed_by": ""
+  },
+  "expected": {
+    "entities": {},
+    "field_assertions": [],
+    "diagnostics": []
+  },
+  "tolerances": {
+    "source_decimal": "exact",
+    "converted_by_dimension": {}
+  },
+  "capabilities": {
+    "geometry": "NOT_IMPLEMENTED",
+    "properties": "NOT_IMPLEMENTED",
+    "boundary": "NOT_IMPLEMENTED",
+    "loads": "NOT_IMPLEMENTED",
+    "core": "NOT_IMPLEMENTED",
+    "ifc": "NOT_IMPLEMENTED"
+  },
+  "ci": {
+    "command": "",
+    "run_url": "",
+    "extractor_commit": ""
+  },
+  "notes": "Template only; do not count as a tested fixture."
+}
