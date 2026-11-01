@@ -2,13 +2,13 @@
   "project": "Linkoteq Universal Structural Model Importer",
   "specificationVersion": "0.1.1-draft",
   "date": "2026-10-28",
-  "currentStage": "GPT1_CSI_SAMPLES_REVIEWED_SPECIFICATION_AMENDMENT_PREPARED",
+  "currentStage": "GPT2_PARTIAL_IMPORT_RESULT_V0_1_CANDIDATE_UNMERGED",
   "core": {
     "schemaVersion": "0.5",
     "inspectedMainCommit": "b1f25a6b735f4e3c586d4d8497298ebd6f656126",
-    "latestReleasedVersion": null,
+    "latestReleasedVersion": "v0.5.0",
     "releaseEvidence": "releases=[]; matching-refs/tags=[]",
-    "compatibility": "proposed-not-runtime-verified"
+    "compatibility": "Core v0.5 release inspected; Import Result source views not promoted to Core"
   },
   "deliverables": [
     "README.md",
@@ -139,5 +139,28 @@
     "baseCommit": "66675d5158000aaca4ffe80f2efc08504d2bdd44",
     "status": "PREPARED_FOR_EXACT_DIFF_REVIEW",
     "privateSourceFilesIncluded": false
+  },
+  "gpt2ImportResult": {
+    "contract": "linkoteq.import-result",
+    "version": "0.1.0",
+    "branch": "gpt2/sap2000-engineering-geometry",
+    "merged": false,
+    "coreModel": "null (mapping not verified)",
+    "formats": {
+      "SAP2000": "partial source views: geometry, properties, boundaries, selected loads/cases/combinations; diaphragms preserved only",
+      "STAAD": "partial geometry source view; remaining engineering preserved only",
+      "ETABS": "preservation only; parser not connected"
+    },
+    "ci": "pending latest run; do not claim PASS until checked",
+    "limitations": [
+      "source-level records not canonical SI",
+      "no full byte-span provenance per semantic record",
+      "unsupported SAP distributed load variants diagnosed and retained in archive",
+      "no Core mapping, IFC, analysis, or equivalence claim"
+    ],
+    "coordination": {
+      "modelPR5": "merged 24b526873e3148e5f149ab2ab68b2e92ac221b3d",
+      "coreGapPR5": "merged 2787faf13c2926c8f23151e49b93d625f7375b57"
+    }
   }
 }
