@@ -44,7 +44,7 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
                        "frameSectionAssignments":[],"restraints":[],"springs":[],
                        "releases":[],"loadPatterns":[],"nodalLoads":[],
                        "distributedFrameLoads":[],"loadCases":[],
-                       "loadCombinations":[],"diaphragms":[],"diaphragmMemberships":[]},
+                       "loadCombinations":[],"diaphragms":[],"diaphragmMemberships":[],"frameAxisRotations":[],"frameInsertions":[]},
         "capabilities":{},
         "diagnostics":[],
         "fidelity":{"originalBytesPreserved":True,"engineeringEquivalenceVerified":False,
@@ -67,6 +67,8 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
         d=extract_diaphragms(archive)
         from .sap2000_reference_audit import audit_references
         reference_audit=audit_references(archive)
+        from .sap2000_frame_axes import extract_frame_axes
+        axes=extract_frame_axes(archive)
         profile="sap2000-tables"
         view["nodes"]=[{**_source_ref(archive,"node",j.source_id,j.source_line,profile),
                         "coordinatesSourceUnits":[str(j.x),str(j.y),str(j.z)]} for j in g.joints]
@@ -82,6 +84,8 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
             ("frameSectionAssignments",p.assignments,"frame_section_assignment"),
             ("diaphragms",d.definitions,"diaphragm"),
             ("diaphragmMemberships",d.memberships,"diaphragm_membership"),
+            ("frameAxisRotations",axes.rotations,"frame_axis_rotation"),
+            ("frameInsertions",axes.insertions,"frame_insertion"),
         ):
             for index,item in enumerate(items):
                 sid=getattr(item,"source_id",None) or getattr(item,"joint_id",None) or getattr(item,"frame_id",None) or getattr(item,"combination_id",None)
@@ -104,7 +108,7 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
                 record["sourceFields"]=normalize(record["sourceFields"])
                 view[name].append(record)
         result["sourceUnitsDeclaration"]=g.declared_units
-        diagnostics.extend(g.diagnostics+p.diagnostics+b.diagnostics+l.diagnostics+a.diagnostics+d.diagnostics+reference_audit.diagnostics)
+        diagnostics.extend(g.diagnostics+p.diagnostics+b.diagnostics+l.diagnostics+a.diagnostics+d.diagnostics+axes.diagnostics+reference_audit.diagnostics)
         result["referenceAudit"]={"counts":reference_audit.counts,
                                   "diagnostics":list(reference_audit.diagnostics),
                                   "validatedAgainstSourceGeometry":True,
@@ -115,6 +119,7 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
             "boundary":"parsed-source-view",
             "loads":"partial-source-view",
             "diaphragms":"parsed-source-view-not-core-mapped",
+            "frameLocalAxes":"source-angle-only-not-transformed",
             "coreMapping":"not-attempted"}
         stage["parsed"]="partial"
     elif format=="staad":
