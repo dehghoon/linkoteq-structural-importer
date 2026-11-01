@@ -44,7 +44,7 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
                        "frameSectionAssignments":[],"restraints":[],"springs":[],
                        "releases":[],"loadPatterns":[],"nodalLoads":[],
                        "distributedFrameLoads":[],"loadCases":[],
-                       "loadCombinations":[],"diaphragms":[]},
+                       "loadCombinations":[],"diaphragms":[],"diaphragmMemberships":[]},
         "capabilities":{},
         "diagnostics":[],
         "fidelity":{"originalBytesPreserved":True,"engineeringEquivalenceVerified":False,
@@ -63,6 +63,8 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
         b=extract_boundaries(archive)
         l=extract_loads(archive)
         a=extract_advanced_loads(archive)
+        from .sap2000_diaphragms import extract_diaphragms
+        d=extract_diaphragms(archive)
         profile="sap2000-tables"
         view["nodes"]=[{**_source_ref(archive,"node",j.source_id,j.source_line,profile),
                         "coordinatesSourceUnits":[str(j.x),str(j.y),str(j.z)]} for j in g.joints]
@@ -76,6 +78,8 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
             ("distributedFrameLoads",a.distributed,"distributed_load"),
             ("loadCases",a.cases,"load_case"),("loadCombinations",a.combinations,"load_combination"),
             ("frameSectionAssignments",p.assignments,"frame_section_assignment"),
+            ("diaphragms",d.definitions,"diaphragm"),
+            ("diaphragmMemberships",d.memberships,"diaphragm_membership"),
         ):
             for index,item in enumerate(items):
                 sid=getattr(item,"source_id",None) or getattr(item,"joint_id",None) or getattr(item,"frame_id",None) or getattr(item,"combination_id",None)
@@ -85,7 +89,7 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
                 record={**_source_ref(archive,kind,str(sid),line,profile),
                         "sourceFields":{k:v for k,v in vars(item).items()
                                         if k not in ("source_line","source_lines")}}
-                if kind in ("nodal_load","distributed_load","frame_section_assignment"):
+                if kind in ("nodal_load","distributed_load","frame_section_assignment","diaphragm_membership","restraint","spring","release"):
                     record["id"]=entity_id(archive.namespace,profile,kind,str(sid),str(line)+":"+str(index))
                 # Decimal is serialized as exact source text, not floating point.
                 def normalize(value):
@@ -98,13 +102,13 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
                 record["sourceFields"]=normalize(record["sourceFields"])
                 view[name].append(record)
         result["sourceUnitsDeclaration"]=g.declared_units
-        diagnostics.extend(g.diagnostics+p.diagnostics+b.diagnostics+l.diagnostics+a.diagnostics)
+        diagnostics.extend(g.diagnostics+p.diagnostics+b.diagnostics+l.diagnostics+a.diagnostics+d.diagnostics)
         result["capabilities"]={
             "geometry":"parsed-source-view",
             "properties":"parsed-source-view",
             "boundary":"parsed-source-view",
             "loads":"partial-source-view",
-            "diaphragms":"preserved-only",
+            "diaphragms":"parsed-source-view-not-core-mapped",
             "coreMapping":"not-attempted"}
         stage["parsed"]="partial"
     elif format=="staad":
