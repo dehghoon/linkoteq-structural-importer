@@ -22,3 +22,6 @@ Agree on JSON schema, capability states, byte provenance for records, unit conve
 
 ## Diaphragm regression (2026-11-01)
 SAP2000 source tables `CONSTRAINT DEFINITIONS - DIAPHRAGM` and `JOINT CONSTRAINT ASSIGNMENTS` now feed `sourceViews.diaphragms` and `sourceViews.diaphragmMemberships`. Verified GitHub Actions PASS: https://github.com/dehghoon/linkoteq-structural-importer/actions/runs/41310243381 . Area membrane sections are separate and not inferred to be diaphragm constraints. Source joint IDs and source line provenance are retained. Consumer must not treat source view as a Core diaphragm until contract semantics are validated.
+
+## Source reference validation (2026-11-01)
+`Import Result.referenceAudit` reports source-reference diagnostics for restraints, springs, end releases, nodal loads, distributed frame loads, and diaphragm memberships. No repair/defaulting is performed. CI PASS on real pinned SAP fixture and synthetic invalid references: https://github.com/dehghoon/linkoteq-structural-importer/actions/runs/41310588128 . This validates identifier existence only, not member local-axis semantics, units, Core schema, or structural analysis equivalence.
