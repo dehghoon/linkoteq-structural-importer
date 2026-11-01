@@ -10,6 +10,8 @@ on:
       - 'src/linkoteq_importer/sap2000_loads.py'
       - 'src/linkoteq_importer/sap2000_advanced_loads.py'
       - 'src/linkoteq_importer/import_result.py'
+      - 'src/linkoteq_importer/sap2000_diaphragms.py'
+      - 'scripts/test_sap2000_diaphragm_fixture.py'
       - 'scripts/test_import_result_fixture.py'
       - 'scripts/test_sap2000_advanced_loads_fixture.py'
       - 'scripts/test_sap2000_boundary_load_fixture.py'
@@ -72,3 +74,5 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_advanced_loads_fixture.py
       - name: Verify versioned Import Result contract
         run: PYTHONPATH=src python scripts/test_import_result_fixture.py
+      - name: Verify SAP2000 diaphragm fixture
+        run: PYTHONPATH=src python scripts/test_sap2000_diaphragm_fixture.py
