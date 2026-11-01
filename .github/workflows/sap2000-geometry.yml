@@ -12,6 +12,7 @@ on:
       - 'src/linkoteq_importer/import_result.py'
       - 'src/linkoteq_importer/sap2000_diaphragms.py'
       - 'scripts/test_sap2000_diaphragm_fixture.py'
+      - 'scripts/test_sap2000_diaphragm_invalid_references.py'
       - 'scripts/test_import_result_fixture.py'
       - 'scripts/test_sap2000_advanced_loads_fixture.py'
       - 'scripts/test_sap2000_boundary_load_fixture.py'
@@ -76,3 +77,5 @@ jobs:
         run: PYTHONPATH=src python scripts/test_import_result_fixture.py
       - name: Verify SAP2000 diaphragm fixture
         run: PYTHONPATH=src python scripts/test_sap2000_diaphragm_fixture.py
+      - name: Verify invalid diaphragm membership diagnostics
+        run: PYTHONPATH=src python scripts/test_sap2000_diaphragm_invalid_references.py
