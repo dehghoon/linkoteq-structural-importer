@@ -13,6 +13,8 @@ on:
       - 'src/linkoteq_importer/sap2000_diaphragms.py'
       - 'src/linkoteq_importer/sap2000_reference_audit.py'
       - 'src/linkoteq_importer/sap2000_frame_axes.py'
+      - 'src/linkoteq_importer/sap2000_release_semantics.py'
+      - 'scripts/test_sap2000_release_semantics.py'
       - 'scripts/test_sap2000_frame_axes_fixture.py'
       - 'scripts/test_sap2000_reference_audit.py'
       - 'scripts/test_sap2000_diaphragm_fixture.py'
@@ -87,3 +89,5 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_reference_audit.py
       - name: Verify SAP2000 frame local axes and releases
         run: PYTHONPATH=src python scripts/test_sap2000_frame_axes_fixture.py
+      - name: Verify synthetic rotated beam I/J release semantics
+        run: PYTHONPATH=src python scripts/test_sap2000_release_semantics.py
