@@ -1,0 +1,26 @@
+name: SAP2000 pinned source fixture regression
+on:
+  push:
+    branches:
+      - gpt2/sap2000-real-fixture-regression
+  pull_request:
+    paths:
+      - 'scripts/validate_sap2000_github_fixture.py'
+      - 'docs/MTDENN~1.$2k'
+      - '.github/workflows/sap2000-fixture.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sap2000-fixture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate pinned SAP2000 source fixture
+        run: python scripts/validate_sap2000_github_fixture.py 'docs/MTDENN~1.$2k'
