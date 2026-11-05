@@ -13,6 +13,8 @@ on:
       - 'src/linkoteq_importer/core_v06_candidate.py'
       - 'src/linkoteq_importer/core_v06_blockers.py'
       - 'src/linkoteq_importer/core_v06_supports.py'
+      - 'src/linkoteq_importer/core_v06_releases.py'
+      - 'scripts/test_sap2000_real_core_v06_releases.py'
       - 'scripts/test_sap2000_real_core_v06_supports.py'
       - 'scripts/test_core_v06_candidate.py'
       - 'scripts/test_sap2000_real_core_v06_candidate.py'
@@ -65,6 +67,8 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_real_core_v06_candidate.py
       - name: Verify real SAP2000 six-DOF supports in Core v0.6 shape
         run: PYTHONPATH=src python scripts/test_sap2000_real_core_v06_supports.py
+      - name: Verify real SAP2000 I/J frame releases in Core v0.6 shape
+        run: PYTHONPATH=src python scripts/test_sap2000_real_core_v06_releases.py
       - name: Verify Core v0.5 geometry fragment mapping
         run: PYTHONPATH=src python scripts/test_sap2000_core_geometry_fragment.py
       - name: Verify Core dimensional material and section conversions
