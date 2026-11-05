@@ -31,8 +31,8 @@ async def import_sap2000(
         raise HTTPException(status_code=400, detail="UNSUPPORTED_SAP_EXTENSION")
     if not project_id or len(project_id) > 128:
         raise HTTPException(status_code=400, detail="INVALID_PROJECT_ID")
-    data = await file.read(DEFAULT_LIMITS.max_bytes + 1)
-    if len(data) > DEFAULT_LIMITS.max_bytes:
+    data = await file.read(DEFAULT_LIMITS.maxBytes + 1)
+    if len(data) > DEFAULT_LIMITS.maxBytes:
         raise HTTPException(status_code=413, detail="SAP2000_FILE_TOO_LARGE")
     try:
         payload = build_gpt3_package(data, filename=filename, project_id=project_id)
