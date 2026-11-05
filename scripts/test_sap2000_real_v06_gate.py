@@ -39,24 +39,24 @@ def run():
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
     unparsed = report["importFidelity"]["unparsedDistributedLoadDiagnostics"]
-    assert unparsed["preservedOnlyCount"] == 196
+    assert unparsed["preservedOnlyCount"] == 0
     print("SAP_V06_UNPARSED_LOAD_REASONS", unparsed["reasonCounts"], unparsed["examples"])
     completeness = report["importFidelity"]["distributedLoadSourceCompleteness"]
     assert completeness["reconciled"]
     print("SAP_V06_RAW_DISTRIBUTED_ROWS", completeness["rawRowCount"], completeness["parsedCount"], completeness["preservedOnlyCount"])
     assert completeness["rawRowCount"] == completeness["parsedCount"] + completeness["preservedOnlyCount"]
-    assert completeness["parsedCount"] == 1614
-    assert completeness["preservedOnlyCount"] == 196
+    assert completeness["parsedCount"] == 1810
+    assert completeness["preservedOnlyCount"] == 0
     print("SAP_V06_DISTRIBUTED_LOAD_COMPLETENESS", completeness["rawRowCount"], completeness["parsedCount"], completeness["preservedOnlyCount"])
     station_ready = report["importFidelity"]["distributedStationReadiness"]
-    assert station_ready["recordCount"] == 1614
+    assert station_ready["recordCount"] == 1810
     assert station_ready["coreReadyCount"] == 0
     assert station_ready["reasonCounts"]["TRANSVERSE_OFFSET_FORCE_MOMENT_EFFECT_UNVERIFIED"] == 672
     assert station_ready["reasonCounts"]["EXPLICIT_OFFSET_FIELDS_ABSENT"] == 942
     print("SAP_V06_STATION_READINESS", station_ready["reasonCounts"])
     axial = report["importFidelity"]["axialInsertionOffsetAudit"]
     assert axial["assignmentCount"] == 609
-    assert axial["summary"]["loadedRecords"] == 1614
+    assert axial["summary"]["loadedRecords"] == 1810
     assert not axial["axialOffsetStationSemanticsVerified"]
     print("SAP_V06_AXIAL_INSERTION_OFFSETS", axial["summary"])
     insertion_fields = report["importFidelity"]["insertionSourceFieldAudit"]
@@ -69,7 +69,7 @@ def run():
     assert not insertion_audit["coreStationMappingValidated"]
     print("SAP_V06_LOAD_INSERTION_INTERACTIONS", insertion_audit["loadedFramesWithInsertionAssignment"], insertion_audit["affectedLoadCount"])
     stations = report["importFidelity"]["distributedLoadStationAudit"]
-    assert stations["recordCount"] + stations["unresolvedCount"] == 1614
+    assert stations["recordCount"] + stations["unresolvedCount"] == 1810
     assert not stations["offsetAware"]
     print("SAP_V06_LOAD_STATIONS", stations["recordCount"], stations["unresolvedCount"], stations["issues"][:3])
     vectors = report["importFidelity"]["globalDistributedVectorCandidates"]
