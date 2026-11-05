@@ -38,6 +38,9 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    grids = report["importFidelity"]["sourceGridAudit"]
+    assert not grids["coreGridMappingValidated"]
+    print("SAP_V06_SOURCE_GRID_TABLES", grids["gridTableCounts"], grids["sourceRecordCount"], grids["sourceRecords"][:3])
     unparsed = report["importFidelity"]["unparsedDistributedLoadDiagnostics"]
     assert unparsed["preservedOnlyCount"] == 0
     print("SAP_V06_UNPARSED_LOAD_REASONS", unparsed["reasonCounts"], unparsed["examples"])
