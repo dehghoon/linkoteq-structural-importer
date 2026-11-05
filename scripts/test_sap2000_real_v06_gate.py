@@ -38,6 +38,10 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    direction_audit = report["importFidelity"]["distributedLoadDirectionAudit"]
+    assert direction_audit["recordCount"] == 1614
+    assert not direction_audit["globalVectorMappingValidated"]
+    print("SAP_V06_DISTRIBUTED_DIRECTIONS", direction_audit["byCoordinateSystem"], direction_audit["byDirection"], direction_audit["issueCounts"])
     si_loads = report["importFidelity"]["loadSIMagnitudeCandidates"]
     assert si_loads["sourceUnits"] == "KN, m, C"
     assert len(si_loads["nodalLoadsSI"]) == 2
