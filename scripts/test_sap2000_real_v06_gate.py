@@ -38,6 +38,10 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    insertion_fields = report["importFidelity"]["insertionSourceFieldAudit"]
+    assert insertion_fields["recordCount"] == 609
+    assert not insertion_fields["zeroOffsetAssumptionAllowed"]
+    print("SAP_V06_INSERTION_FIELDS", insertion_fields["fieldCounts"], insertion_fields["nonzeroNumericFieldCounts"], insertion_fields["sampleFieldValues"])
     insertion_audit = report["importFidelity"]["loadStationInsertionAudit"]
     assert insertion_audit["insertionAssignmentCount"] == 609
     assert not insertion_audit["insertionOffsetsInterpreted"]
