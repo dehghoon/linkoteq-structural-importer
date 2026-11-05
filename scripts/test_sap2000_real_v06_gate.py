@@ -43,7 +43,7 @@ def run():
     print("SAP_V06_RAW_DISTRIBUTED_ROWS", completeness["rawRowCount"], completeness["parsedCount"], completeness["preservedOnlyCount"])
     assert completeness["rawRowCount"] == completeness["parsedCount"] + completeness["preservedOnlyCount"]
     assert completeness["parsedCount"] == 1614
-    assert completeness["preservedOnlyCount"] >= 0
+    assert completeness["preservedOnlyCount"] == 196
     print("SAP_V06_DISTRIBUTED_LOAD_COMPLETENESS", completeness["rawRowCount"], completeness["parsedCount"], completeness["preservedOnlyCount"])
     station_ready = report["importFidelity"]["distributedStationReadiness"]
     assert station_ready["recordCount"] == 1614
