@@ -13,6 +13,7 @@ from .sap2000_loads import extract_loads
 from .sap2000_advanced_loads import extract_advanced_loads
 from .sap2000_load_reference_audit import audit_sap2000_load_references
 from .sap2000_combination_graph import audit_combination_graph
+from .sap2000_load_units import audit_sap2000_load_units
 
 def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
                                            partial: dict) -> dict:
@@ -29,6 +30,7 @@ def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
     advanced_loads = extract_advanced_loads(archive)
     load_audit = audit_sap2000_load_references(archive, geometry)
     combination_graph = audit_combination_graph(archive)
+    load_units = audit_sap2000_load_units(archive, geometry)
     if any(h != archive.sourceHash for h in (axes.source_hash, diaphragms.source_hash,
                                               loads.source_hash, advanced_loads.source_hash)):
         raise ValueError("SOURCE_HASH_MISMATCH")
@@ -42,6 +44,7 @@ def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
         "nonprismaticSectionDefinitions": tapered,
         "loadReferenceAudit": load_audit,
         "combinationGraphAudit": combination_graph,
+        "loadUnitAudit": load_units,
         "sourceLoads": {
             "patterns": [{"sourceId": x.source_id, "designType": x.design_type, "selfWeightMultiplier": str(x.self_weight_multiplier), "sourceLine": x.source_line} for x in loads.patterns],
             "jointForces": [{"jointId": x.joint_id, "patternId": x.pattern_id, "coordinateSystem": x.coordinate_system, "components": [str(v) for v in x.components], "sourceLine": x.source_line} for x in loads.joint_forces],
