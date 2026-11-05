@@ -58,7 +58,9 @@ def validate_import_result(result: dict) -> tuple[str, ...]:
     require(isinstance(records, list), "FIDELITY_RECORDS_NOT_LIST")
     require(len(records) == sum(len(v) for v in views.values()), "FIDELITY_RECORD_COUNT_MISMATCH")
     require(all(isinstance(r, dict) and r.get("status") == "preserved-only" and
-                r.get("sourceHash") == source["sourceHash"] for r in records),
+                r.get("sourceHash") == source["sourceHash"] and
+                r.get("parseStatus") == "parsed-source-view" and
+                r.get("coreMappingStatus") == "not-validated" for r in records),
             "FIDELITY_RECORD_UNVERIFIED")
     warnings = []
     for index, item in enumerate(views["frameEndReleaseSemantics"]):
