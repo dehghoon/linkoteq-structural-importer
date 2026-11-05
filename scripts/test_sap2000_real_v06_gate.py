@@ -38,6 +38,11 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    load_reference_audit = report["importFidelity"]["loadReferenceAudit"]
+    assert load_reference_audit["counts"]["distributedFrameLoads"] == 1614
+    assert not load_reference_audit["unitsVerified"]
+    assert not load_reference_audit["analysisReady"]
+    print("SAP_V06_LOAD_REFERENCE_AUDIT", load_reference_audit["byCode"])
     source_loads = report["importFidelity"]["sourceLoads"]
     assert len(source_loads["distributedFrameLoads"]) == 1614
     assert len(source_loads["loadCases"]) == 11
