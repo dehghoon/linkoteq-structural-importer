@@ -46,6 +46,10 @@ def run():
     grids = report["importFidelity"]["sourceGridAudit"]
     assert not grids["coreGridMappingValidated"]
     assert grids["gridTableCounts"]["GRID LINES"] == 31
+    grid_preview = report["importFidelity"]["sourceGridPreview"]
+    assert len(grid_preview["gridLines"]) + len(grid_preview["deferredGridLines"]) == 31
+    assert not grid_preview["coreGridMappingValidated"]
+    print("SAP_V06_GRID_PREVIEW", len(grid_preview["gridLines"]), len(grid_preview["deferredGridLines"]))
     print("SAP_V06_SOURCE_GRID_TABLES", grids["gridTableCounts"], grids["sourceRecordCount"], grids["sourceRecords"][:3])
     unparsed = report["importFidelity"]["unparsedDistributedLoadDiagnostics"]
     assert unparsed["preservedOnlyCount"] == 0
