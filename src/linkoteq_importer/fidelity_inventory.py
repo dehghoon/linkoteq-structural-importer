@@ -44,6 +44,8 @@ def build_fidelity_inventory(result: dict) -> dict:
                 "sourceHash": digest,
                 "sourceUnitsDeclaration": result.get("sourceUnitsDeclaration"),
                 "status": "preserved-only",
+                "parseStatus": "parsed-source-view",
+                "coreMappingStatus": "not-validated",
                 "reason": "SOURCE_VIEW_NOT_OFFICIALLY_CORE_VALIDATED",
             })
     counts = Counter(record["status"] for record in records)
