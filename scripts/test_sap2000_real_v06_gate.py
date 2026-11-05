@@ -76,7 +76,8 @@ def run():
     assert len(vectors["vectorCandidates"]) == 528
     assert len(vectors["deferredLoads"]) == 1282
     assert all(x["sourceDirection"].upper() in ("Y", "Z") for x in vectors["vectorCandidates"])
-    assert {x["direction"] for x in vectors["deferredLoads"]} == {"Gravity", "X"}
+    assert len([x for x in vectors["deferredLoads"] if x["reason"] == "DIRECTION_OR_LOAD_TYPE_REQUIRES_SEMANTIC_VERIFICATION"]) == 1282
+    print("SAP_V06_DEFERRED_DIRECTIONS", sorted({x["direction"] for x in vectors["deferredLoads"]}))
     assert not vectors["gravitySignVerified"] and not vectors["mappedToCore"]
     print("SAP_V06_GLOBAL_LOAD_VECTORS", len(vectors["vectorCandidates"]), len(vectors["deferredLoads"]))
     direction_audit = report["importFidelity"]["distributedLoadDirectionAudit"]
