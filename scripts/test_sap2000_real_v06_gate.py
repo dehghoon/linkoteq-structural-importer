@@ -10,6 +10,7 @@ from linkoteq_importer.sap2000_v06_gate import build_sap2000_v06_gate_report
 from linkoteq_importer.sap2000_material_audit import audit_material_origins
 from linkoteq_importer.sap2000_tapered_audit import audit_tapered_source
 from linkoteq_importer.sap2000_nonprismatic import extract_nonprismatic_segments
+from linkoteq_importer.sap2000_nonprismatic_references import audit_nonprismatic_end_sections
 
 def run():
     data = Path("docs/MTDENN~1.$2k").read_bytes()
@@ -55,6 +56,16 @@ def run():
     assert not nonprismatic["mappedToCore"]
     assert all(segment["fields"] for segment in nonprismatic["segments"])
     print("SAP_NONPRISMATIC_PRESERVED_SEGMENTS", nonprismatic["segmentCount"])
+    references = audit_nonprismatic_end_sections(archive, properties)
+    assert len(references["segments"]) == 1
+    segment = references["segments"][0]
+    assert segment["nonprismaticSectionId"] == "Tapered Beam"
+    assert [e["sectionId"] for e in segment["endpoints"]] == ["89 W Beam", "W410X149"]
+    assert segment["ei33Variation"] == "Cubic"
+    assert segment["ei22Variation"] == "Linear"
+    assert not references["coreAnalyticalSectionMapped"]
+    print("SAP_NONPRISMATIC_ENDPOINT_REFERENCES", segment["endpoints"])
+    print("SAP_NONPRISMATIC_ENDPOINT_DIAGNOSTICS", references["diagnosticCounts"])
     assert archive.retrieve() == data
     print("PASS SAP2000 Core v0.6 combined gate", report["counts"],
           "blockerTypes", report["blockers"]["byCode"])
