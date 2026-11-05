@@ -10,6 +10,8 @@ on:
       - 'src/linkoteq_importer/sap2000_loads.py'
       - 'src/linkoteq_importer/sap2000_advanced_loads.py'
       - 'src/linkoteq_importer/import_result.py'
+      - 'src/linkoteq_importer/core_v06_candidate.py'
+      - 'scripts/test_core_v06_candidate.py'
       - 'src/linkoteq_importer/sap2000_diaphragms.py'
       - 'src/linkoteq_importer/sap2000_reference_audit.py'
       - 'src/linkoteq_importer/sap2000_frame_axes.py'
@@ -53,6 +55,8 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_geometry_risk_sampling.py
       - name: Run real SAP2000 material and section extraction
         run: PYTHONPATH=src python scripts/test_sap2000_properties_fixture.py
+      - name: Verify Core v0.6 resolved candidate projection and fail-closed behavior
+        run: PYTHONPATH=src python scripts/test_core_v06_candidate.py
       - name: Verify Core v0.5 geometry fragment mapping
         run: PYTHONPATH=src python scripts/test_sap2000_core_geometry_fragment.py
       - name: Verify Core dimensional material and section conversions
