@@ -12,6 +12,7 @@ from linkoteq_importer.sap2000_tapered_audit import audit_tapered_source
 from linkoteq_importer.sap2000_nonprismatic import extract_nonprismatic_segments
 from linkoteq_importer.sap2000_nonprismatic_references import audit_nonprismatic_end_sections
 from linkoteq_importer.sap2000_nonprismatic_materials import resolve_nonprismatic_member_materials
+from linkoteq_importer.sap2000_v06_material_reconciliation import reconcile_tapered_material_diagnostics
 
 def run():
     data = Path("docs/MTDENN~1.$2k").read_bytes()
@@ -73,6 +74,13 @@ def run():
     assert all(item["resolvedMaterialId"] == "A992Fy50" for item in material_resolution["resolutions"])
     assert all(not item["analyticalSectionMapped"] for item in material_resolution["resolutions"])
     print("SAP_NONPRISMATIC_MATERIAL_RESOLVED", len(material_resolution["resolutions"]))
+    reconciliation = reconcile_tapered_material_diagnostics(archive, properties, partial)
+    assert reconciliation["resolvedMaterialCount"] == 54
+    assert reconciliation["originalUnresolvedCount"] == 58
+    assert reconciliation["remainingReferenceCount"] == 4
+    assert all(item.startswith("UNKNOWN_SECTION:") for item in reconciliation["outstandingUnresolvedReferences"])
+    assert not reconciliation["analysisReady"] and not reconciliation["canonicalCoreValidated"]
+    print("SAP_V06_MATERIAL_RECONCILIATION", {k: reconciliation[k] for k in ("originalUnresolvedCount", "resolvedMaterialCount", "remainingReferenceCount", "nonprismaticSectionStatus")})
     assert archive.retrieve() == data
     print("PASS SAP2000 Core v0.6 combined gate", report["counts"],
           "blockerTypes", report["blockers"]["byCode"])
