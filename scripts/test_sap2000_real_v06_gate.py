@@ -38,6 +38,11 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    insertion_audit = report["importFidelity"]["loadStationInsertionAudit"]
+    assert insertion_audit["insertionAssignmentCount"] == 609
+    assert not insertion_audit["insertionOffsetsInterpreted"]
+    assert not insertion_audit["coreStationMappingValidated"]
+    print("SAP_V06_LOAD_INSERTION_INTERACTIONS", insertion_audit["loadedFramesWithInsertionAssignment"], insertion_audit["affectedLoadCount"])
     stations = report["importFidelity"]["distributedLoadStationAudit"]
     assert stations["recordCount"] + stations["unresolvedCount"] == 1614
     assert not stations["offsetAware"]
