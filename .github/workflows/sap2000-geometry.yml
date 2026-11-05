@@ -27,6 +27,7 @@ on:
       - 'src/linkoteq_importer/sap2000_combination_graph.py'
       - 'src/linkoteq_importer/sap2000_load_units.py'
       - 'src/linkoteq_importer/sap2000_load_si.py'
+      - 'src/linkoteq_importer/sap2000_load_direction_audit.py'
       - 'scripts/test_sap2000_real_v06_gate.py'
       - 'scripts/test_sap2000_real_core_v06_releases.py'
       - 'scripts/test_sap2000_real_core_v06_supports.py'
