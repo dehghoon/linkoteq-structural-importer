@@ -49,6 +49,17 @@ def validate_import_result(result: dict) -> tuple[str, ...]:
             "SOURCE_PRESERVATION_NOT_VERIFIED")
     require(result["fidelity"].get("engineeringEquivalenceVerified") is False,
             "ENGINEERING_EQUIVALENCE_NOT_VERIFIED")
+    inventory = result.get("fidelityInventory")
+    require(isinstance(inventory, dict), "FIDELITY_INVENTORY_MISSING")
+    require(inventory.get("sourceHash") == source["sourceHash"], "FIDELITY_HASH_MISMATCH")
+    require(inventory.get("canonicalMappingValidated") is False, "UNVERIFIED_FIDELITY_PROMOTION")
+    require(inventory.get("unparsedSourceCoverage") == "unknown-original-bytes-preserved", "UNPROVEN_SOURCE_COVERAGE")
+    records = inventory.get("records")
+    require(isinstance(records, list), "FIDELITY_RECORDS_NOT_LIST")
+    require(len(records) == sum(len(v) for v in views.values()), "FIDELITY_RECORD_COUNT_MISMATCH")
+    require(all(isinstance(r, dict) and r.get("status") == "preserved-only" and
+                r.get("sourceHash") == source["sourceHash"] for r in records),
+            "FIDELITY_RECORD_UNVERIFIED")
     warnings = []
     for index, item in enumerate(views["frameEndReleaseSemantics"]):
         prefix = "RELEASE_SEMANTICS:" + str(index) + ":"
