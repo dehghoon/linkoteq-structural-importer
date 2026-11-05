@@ -38,6 +38,10 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    stations = report["importFidelity"]["distributedLoadStationAudit"]
+    assert stations["recordCount"] + stations["unresolvedCount"] == 1614
+    assert not stations["offsetAware"]
+    print("SAP_V06_LOAD_STATIONS", stations["recordCount"], stations["unresolvedCount"], stations["issues"][:3])
     vectors = report["importFidelity"]["globalDistributedVectorCandidates"]
     assert len(vectors["vectorCandidates"]) == 528
     assert len(vectors["deferredLoads"]) == 1086
