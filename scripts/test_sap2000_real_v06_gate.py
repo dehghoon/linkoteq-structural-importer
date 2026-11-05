@@ -38,6 +38,11 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    load_units = report["importFidelity"]["loadUnitAudit"]
+    assert load_units["sourceHash"] == digest
+    assert not load_units["numericLoadConversionPerformed"]
+    assert not load_units["analysisReady"]
+    print("SAP_V06_LOAD_UNITS", load_units["distinctDeclarations"], load_units["issues"])
     combination_graph = report["importFidelity"]["combinationGraphAudit"]
     assert combination_graph["combinationCount"] == 48
     assert combination_graph["caseCount"] == 11
