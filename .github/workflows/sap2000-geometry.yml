@@ -11,6 +11,7 @@ on:
       - 'src/linkoteq_importer/sap2000_advanced_loads.py'
       - 'src/linkoteq_importer/import_result.py'
       - 'src/linkoteq_importer/core_v06_candidate.py'
+      - 'src/linkoteq_importer/core_v06_blockers.py'
       - 'scripts/test_core_v06_candidate.py'
       - 'scripts/test_sap2000_real_core_v06_candidate.py'
       - 'src/linkoteq_importer/sap2000_diaphragms.py'
