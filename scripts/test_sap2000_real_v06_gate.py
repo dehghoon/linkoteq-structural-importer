@@ -11,6 +11,7 @@ from linkoteq_importer.sap2000_material_audit import audit_material_origins
 from linkoteq_importer.sap2000_tapered_audit import audit_tapered_source
 from linkoteq_importer.sap2000_nonprismatic import extract_nonprismatic_segments
 from linkoteq_importer.sap2000_nonprismatic_references import audit_nonprismatic_end_sections
+from linkoteq_importer.sap2000_nonprismatic_materials import resolve_nonprismatic_member_materials
 
 def run():
     data = Path("docs/MTDENN~1.$2k").read_bytes()
@@ -66,6 +67,12 @@ def run():
     assert not references["coreAnalyticalSectionMapped"]
     print("SAP_NONPRISMATIC_ENDPOINT_REFERENCES", segment["endpoints"])
     print("SAP_NONPRISMATIC_ENDPOINT_DIAGNOSTICS", references["diagnosticCounts"])
+    material_resolution = resolve_nonprismatic_member_materials(archive, properties, partial)
+    assert len(material_resolution["resolutions"]) == 54
+    assert material_resolution["unresolved"] == []
+    assert all(item["resolvedMaterialId"] == "A992Fy50" for item in material_resolution["resolutions"])
+    assert all(not item["analyticalSectionMapped"] for item in material_resolution["resolutions"])
+    print("SAP_NONPRISMATIC_MATERIAL_RESOLVED", len(material_resolution["resolutions"]))
     assert archive.retrieve() == data
     print("PASS SAP2000 Core v0.6 combined gate", report["counts"],
           "blockerTypes", report["blockers"]["byCode"])
