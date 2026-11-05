@@ -38,6 +38,15 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    si_loads = report["importFidelity"]["loadSIMagnitudeCandidates"]
+    assert si_loads["sourceUnits"] == "KN, m, C"
+    assert len(si_loads["nodalLoadsSI"]) == 2
+    assert len(si_loads["distributedMagnitudeCandidatesSI"]) == 1614
+    assert not si_loads["coreMappingValidated"]
+    assert not si_loads["localDirectionTransformsValidated"]
+    assert all(x["siMagnitudeCandidates"] is None or x["magnitudeUnit"] == "N/m"
+               for x in si_loads["distributedMagnitudeCandidatesSI"])
+    print("SAP_V06_SI_LOAD_MAGNITUDES", len(si_loads["nodalLoadsSI"]), len(si_loads["distributedMagnitudeCandidatesSI"]))
     load_units = report["importFidelity"]["loadUnitAudit"]
     assert load_units["sourceHash"] == digest
     assert not load_units["numericLoadConversionPerformed"]
