@@ -35,6 +35,7 @@ on:
       - 'src/linkoteq_importer/sap2000_axial_insertion_audit.py'
       - 'src/linkoteq_importer/sap2000_station_readiness.py'
       - 'src/linkoteq_importer/sap2000_load_completeness.py'
+      - 'src/linkoteq_importer/sap2000_unparsed_load_diagnostics.py'
       - 'scripts/test_sap2000_real_v06_gate.py'
       - 'scripts/test_sap2000_global_vectors_known_answers.py'
       - 'scripts/test_sap2000_real_core_v06_releases.py'
