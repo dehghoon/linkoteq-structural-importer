@@ -11,6 +11,7 @@ Source of truth: importer branch `gpt2/core-v06-sap-migration`; real fixture `do
 3. Display unresolved member sections as **unresolved**, not as an invented default. Four assignments refer to `None`; nonprismatic `Tapered Beam` is not an analytical Core section.
 4. Keep original archive bytes, source hash, provenance, and the complete `importFidelity` report associated with the preview. The parser now extracts 1,810 distributed load records: 1,614 forces plus 196 distributed moments; parsing is **not** Core load mapping.
 5. Make all non-certified domains visible as preserved metadata or warnings; do not imply analysis validity.
+6. Include `sourceGridAudit` and `sourceLevelAudit` from `importFidelity`. Preserve source-defined grid labels, story/level names and elevations as raw records until coordinate semantics are validated. Do not infer source stories from node Z values or silently fabricate grid labels.
 
 ## Integration guardrails
 
@@ -27,6 +28,7 @@ Source of truth: importer branch `gpt2/core-v06-sap-migration`; real fixture `do
 - Archive hash matches pinned SHA256; raw source and Import Fidelity can be retrieved.
 - 1,810 distributed loads remain traceable (including 196 Moment); no unsupported load is displayed as an analytical Core load.
 - Import preview does not expose an analysis-ready or validated Core model.
+- Grids and levels are exposed as source-preserved records or explicitly marked absent; no fabricated source grids/stories.
 - UI/viewport work belongs to GPT-3; GPT-2 owns importer and semantic Core mapping.
 
 ## Remaining GPT-2 work
