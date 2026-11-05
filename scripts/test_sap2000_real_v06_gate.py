@@ -47,6 +47,7 @@ def run():
     assert not tapered["mappedToCore"] and not tapered["analysisReady"]
     print("SAP_TAPERED_SOURCE_TABLES", tapered["candidateTables"])
     print("SAP_TAPERED_SOURCE_RECORDS", tapered["records"][:15])
+    print("SAP_NONPRISMATIC_SOURCE_RECORDS", [r for r in tapered["records"] if "NONPRISMATIC" in r["table"]][:20])
     assert archive.retrieve() == data
     print("PASS SAP2000 Core v0.6 combined gate", report["counts"],
           "blockerTypes", report["blockers"]["byCode"])
