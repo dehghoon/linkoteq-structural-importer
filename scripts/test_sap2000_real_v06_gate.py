@@ -38,6 +38,12 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    completeness = report["importFidelity"]["distributedLoadSourceCompleteness"]
+    assert completeness["reconciled"]
+    assert completeness["rawRowCount"] == 1614
+    assert completeness["parsedCount"] == 1614
+    assert completeness["preservedOnlyCount"] == 0
+    print("SAP_V06_DISTRIBUTED_LOAD_COMPLETENESS", completeness["rawRowCount"], completeness["parsedCount"], completeness["preservedOnlyCount"])
     station_ready = report["importFidelity"]["distributedStationReadiness"]
     assert station_ready["recordCount"] == 1614
     assert station_ready["coreReadyCount"] == 0
