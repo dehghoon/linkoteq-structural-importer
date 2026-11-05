@@ -38,8 +38,9 @@ def convert_sap2000_kn_m_load_magnitudes(archive, geometry) -> dict:
             "sourceMagnitudes": [str(x.magnitude_start), str(x.magnitude_end)],
             "siMagnitudeCandidates": ([str(x.magnitude_start * factor),
                                        str(x.magnitude_end * factor)]
-                                      if x.load_type.casefold() == "force" else None),
-            "magnitudeUnit": "N/m" if x.load_type.casefold() == "force" else None,
+                                      if x.load_type.casefold() in ("force", "moment") else None),
+            "magnitudeUnit": ("N/m" if x.load_type.casefold() == "force" else
+                              "N*m/m" if x.load_type.casefold() == "moment" else None),
             "sourceLine": x.source_line, "directionTransformed": False,
             "coreMappingValidated": False,
         })
@@ -50,6 +51,7 @@ def convert_sap2000_kn_m_load_magnitudes(archive, geometry) -> dict:
         "distributedMagnitudeCandidatesSI": distributed,
         "forceScale": "1000", "momentScale": "1000",
         "distributedForcePerLengthScale": "1000",
+        "distributedMomentPerLengthScale": "1000",
         "distributedNonForceTypesValidated": False,
         "localDirectionTransformsValidated": False,
         "coreMappingValidated": False,
