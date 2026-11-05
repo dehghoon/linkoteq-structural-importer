@@ -156,4 +156,6 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
     else:
         diagnostics.append("ETABS_ENGINEERING_PARSER_NOT_CONNECTED")
         result["capabilities"]={"engineering":"preserved-only","coreMapping":"not-attempted"}
+    from .fidelity_inventory import build_fidelity_inventory
+    result["fidelityInventory"] = build_fidelity_inventory(result)
     return result
