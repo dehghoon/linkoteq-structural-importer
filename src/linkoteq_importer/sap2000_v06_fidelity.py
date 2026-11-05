@@ -17,6 +17,7 @@ from .sap2000_load_units import audit_sap2000_load_units
 from .sap2000_load_si import convert_sap2000_kn_m_load_magnitudes
 from .sap2000_load_direction_audit import audit_distributed_load_semantics
 from .sap2000_global_load_vectors import project_global_distributed_vectors
+from .sap2000_load_stations import audit_distributed_load_stations
 
 def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
                                            partial: dict) -> dict:
@@ -33,6 +34,7 @@ def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
     advanced_loads = extract_advanced_loads(archive)
     load_audit = audit_sap2000_load_references(archive, geometry)
     combination_graph = audit_combination_graph(archive)
+    load_stations = audit_distributed_load_stations(archive, geometry)
     load_directions = audit_distributed_load_semantics(archive, geometry)
     global_vectors = None
     load_units = audit_sap2000_load_units(archive, geometry)
@@ -56,6 +58,7 @@ def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
         "combinationGraphAudit": combination_graph,
         "loadUnitAudit": load_units,
         "distributedLoadDirectionAudit": load_directions,
+        "distributedLoadStationAudit": load_stations,
         "globalDistributedVectorCandidates": global_vectors,
         "loadSIMagnitudeCandidates": load_si,
         "sourceLoads": {
