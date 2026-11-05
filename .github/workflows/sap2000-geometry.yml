@@ -40,6 +40,8 @@ on:
       - 'src/linkoteq_importer/sap2000_level_audit.py'
       - 'src/linkoteq_importer/sap2000_grid_preview.py'
       - 'scripts/test_sap2000_real_v06_gate.py'
+      - 'scripts/test_sap2000_gpt3_package.py'
+      - 'src/linkoteq_importer/sap2000_gpt3_package.py'
       - 'scripts/test_sap2000_global_vectors_known_answers.py'
       - 'scripts/test_sap2000_real_core_v06_releases.py'
       - 'scripts/test_sap2000_real_core_v06_supports.py'
@@ -98,6 +100,8 @@ jobs:
         run: PYTHONPATH=src python scripts/test_sap2000_real_core_v06_releases.py
       - name: Verify integrated real SAP2000 Core v0.6 gate report
         run: PYTHONPATH=src python scripts/test_sap2000_real_v06_gate.py
+      - name: Verify real SAP2000 GPT-3 handoff JSON round trip
+        run: PYTHONPATH=src python scripts/test_sap2000_gpt3_package.py
       - name: Verify signed SAP global load vectors with independent known answers
         run: PYTHONPATH=src python scripts/test_sap2000_global_vectors_known_answers.py
       - name: Verify Core v0.5 geometry fragment mapping
