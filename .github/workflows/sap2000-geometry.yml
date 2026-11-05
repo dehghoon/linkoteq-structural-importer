@@ -30,6 +30,7 @@ on:
       - 'src/linkoteq_importer/sap2000_load_direction_audit.py'
       - 'src/linkoteq_importer/sap2000_global_load_vectors.py'
       - 'src/linkoteq_importer/sap2000_load_stations.py'
+      - 'src/linkoteq_importer/sap2000_load_insertion_audit.py'
       - 'scripts/test_sap2000_real_v06_gate.py'
       - 'scripts/test_sap2000_global_vectors_known_answers.py'
       - 'scripts/test_sap2000_real_core_v06_releases.py'
