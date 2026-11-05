@@ -15,6 +15,7 @@ from .sap2000_load_reference_audit import audit_sap2000_load_references
 from .sap2000_combination_graph import audit_combination_graph
 from .sap2000_load_units import audit_sap2000_load_units
 from .sap2000_load_si import convert_sap2000_kn_m_load_magnitudes
+from .sap2000_load_direction_audit import audit_distributed_load_semantics
 
 def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
                                            partial: dict) -> dict:
@@ -31,6 +32,7 @@ def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
     advanced_loads = extract_advanced_loads(archive)
     load_audit = audit_sap2000_load_references(archive, geometry)
     combination_graph = audit_combination_graph(archive)
+    load_directions = audit_distributed_load_semantics(archive, geometry)
     load_units = audit_sap2000_load_units(archive, geometry)
     load_si = (convert_sap2000_kn_m_load_magnitudes(archive, geometry)
                if load_units["distinctDeclarations"] == ["KN, m, C"] and not load_units["issues"]
@@ -49,6 +51,7 @@ def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
         "loadReferenceAudit": load_audit,
         "combinationGraphAudit": combination_graph,
         "loadUnitAudit": load_units,
+        "distributedLoadDirectionAudit": load_directions,
         "loadSIMagnitudeCandidates": load_si,
         "sourceLoads": {
             "patterns": [{"sourceId": x.source_id, "designType": x.design_type, "selfWeightMultiplier": str(x.self_weight_multiplier), "sourceLine": x.source_line} for x in loads.patterns],
