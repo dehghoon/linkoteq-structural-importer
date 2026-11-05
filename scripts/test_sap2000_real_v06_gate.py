@@ -38,6 +38,12 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    station_ready = report["importFidelity"]["distributedStationReadiness"]
+    assert station_ready["recordCount"] == 1614
+    assert station_ready["coreReadyCount"] == 0
+    assert station_ready["reasonCounts"]["TRANSVERSE_OFFSET_FORCE_MOMENT_EFFECT_UNVERIFIED"] == 672
+    assert station_ready["reasonCounts"]["EXPLICIT_OFFSET_FIELDS_ABSENT"] == 942
+    print("SAP_V06_STATION_READINESS", station_ready["reasonCounts"])
     axial = report["importFidelity"]["axialInsertionOffsetAudit"]
     assert axial["assignmentCount"] == 609
     assert axial["summary"]["loadedRecords"] == 1614
