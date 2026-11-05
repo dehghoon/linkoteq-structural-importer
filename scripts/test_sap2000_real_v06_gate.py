@@ -37,6 +37,13 @@ def run():
     assert report["importFidelity"]["materialIdentityResolution"]["resolvedMaterialCount"] == 54
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
+    assert "sourceLoads" in report["importFidelity"]
+    source_loads = report["importFidelity"]["sourceLoads"]
+    assert len(source_loads["distributedFrameLoads"]) == 1614
+    assert len(source_loads["loadCases"]) == 11
+    assert len(source_loads["loadCombinations"]) == 48
+    assert not source_loads["mappedToCore"]
+    print("SAP_V06_LOAD_FIDELITY", {key: len(source_loads[key]) for key in ("patterns", "jointForces", "distributedFrameLoads", "loadCases", "loadCombinations")})
     assert "frameLocalAxes" in report["importFidelity"]
     assert "diaphragmConstraints" in report["importFidelity"]
     assert not report["importFidelity"]["frameLocalAxes"]["mappedToCore"]
