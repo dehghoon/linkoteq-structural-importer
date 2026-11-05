@@ -24,6 +24,7 @@ from .sap2000_axial_insertion_audit import audit_axial_insertion_offsets
 from .sap2000_station_readiness import classify_distributed_station_readiness
 from .sap2000_load_completeness import audit_distributed_load_completeness
 from .sap2000_unparsed_load_diagnostics import diagnose_unparsed_distributed_loads
+from .sap2000_grid_audit import audit_source_grids
 
 def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
                                            partial: dict) -> dict:
@@ -47,6 +48,7 @@ def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
     station_readiness = classify_distributed_station_readiness(archive, geometry)
     load_completeness = audit_distributed_load_completeness(archive)
     unparsed_loads = diagnose_unparsed_distributed_loads(archive)
+    source_grids = audit_source_grids(archive)
     load_directions = audit_distributed_load_semantics(archive, geometry)
     global_vectors = None
     load_units = audit_sap2000_load_units(archive, geometry)
@@ -77,6 +79,7 @@ def build_sap2000_v06_fidelity_supplement(archive, geometry, properties,
         "distributedStationReadiness": station_readiness,
         "distributedLoadSourceCompleteness": load_completeness,
         "unparsedDistributedLoadDiagnostics": unparsed_loads,
+        "sourceGridAudit": source_grids,
         "globalDistributedVectorCandidates": global_vectors,
         "loadSIMagnitudeCandidates": load_si,
         "sourceLoads": {
