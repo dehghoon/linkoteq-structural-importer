@@ -18,6 +18,7 @@ on:
       - 'src/linkoteq_importer/sap2000_material_audit.py'
       - 'src/linkoteq_importer/sap2000_tapered_audit.py'
       - 'src/linkoteq_importer/sap2000_nonprismatic.py'
+      - 'src/linkoteq_importer/sap2000_nonprismatic_references.py'
       - 'scripts/test_sap2000_real_v06_gate.py'
       - 'scripts/test_sap2000_real_core_v06_releases.py'
       - 'scripts/test_sap2000_real_core_v06_supports.py'
