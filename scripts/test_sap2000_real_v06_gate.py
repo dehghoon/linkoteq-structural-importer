@@ -8,6 +8,7 @@ from linkoteq_importer.sap2000_boundary import extract_boundaries
 from linkoteq_importer.partial_structural_model import build_partial_model
 from linkoteq_importer.sap2000_v06_gate import build_sap2000_v06_gate_report
 from linkoteq_importer.sap2000_material_audit import audit_material_origins
+from linkoteq_importer.sap2000_tapered_audit import audit_tapered_source
 
 def run():
     data = Path("docs/MTDENN~1.$2k").read_bytes()
@@ -40,6 +41,12 @@ def run():
     assert sum(item["frameCount"] for item in audit["bySourceSection"]) == 54
     assert all(item["resolution"] == "not-mapped-no-substitution" for item in audit["records"])
     print("SAP_MATERIAL_ORIGIN_AUDIT", audit["bySourceSection"])
+    tapered = audit_tapered_source(archive)
+    assert tapered["sourceHash"] == digest
+    assert tapered["recordCount"] > 0
+    assert not tapered["mappedToCore"] and not tapered["analysisReady"]
+    print("SAP_TAPERED_SOURCE_TABLES", tapered["candidateTables"])
+    print("SAP_TAPERED_SOURCE_RECORDS", tapered["records"][:15])
     assert archive.retrieve() == data
     print("PASS SAP2000 Core v0.6 combined gate", report["counts"],
           "blockerTypes", report["blockers"]["byCode"])
