@@ -14,6 +14,7 @@ from linkoteq_importer.sap2000_nonprismatic_references import audit_nonprismatic
 from linkoteq_importer.sap2000_nonprismatic_materials import resolve_nonprismatic_member_materials
 from linkoteq_importer.sap2000_v06_material_reconciliation import reconcile_tapered_material_diagnostics
 from linkoteq_importer.sap2000_none_sections import audit_none_section_assignments
+from linkoteq_importer.sap2000_v06_fidelity import build_sap2000_v06_fidelity_supplement
 
 def run():
     data = Path("docs/MTDENN~1.$2k").read_bytes()
@@ -88,6 +89,14 @@ def run():
     assert all(item["sourceSectionValue"] == "None" for item in none_sections["records"])
     assert not none_sections["analysisReady"]
     print("SAP_EXPLICIT_NONE_SECTIONS", none_sections["records"])
+    fidelity = build_sap2000_v06_fidelity_supplement(archive, geometry, properties, partial)
+    assert fidelity["targetCoreContract"] == "v0.6.0"
+    assert fidelity["originalSourcePreserved"]
+    assert fidelity["materialIdentityResolution"]["resolvedMaterialCount"] == 54
+    assert fidelity["explicitNoneSectionAssignments"]["count"] == 4
+    assert len(fidelity["nonprismaticSectionDefinitions"]["segments"]) == 1
+    assert fidelity["coreModel"] is None and not fidelity["analysisReady"]
+    print("SAP_V06_FIDELITY_SUPPLEMENT", fidelity["engineeringDisposition"])
     assert archive.retrieve() == data
     print("PASS SAP2000 Core v0.6 combined gate", report["counts"],
           "blockerTypes", report["blockers"]["byCode"])
