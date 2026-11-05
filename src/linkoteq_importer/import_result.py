@@ -39,6 +39,8 @@ def build_import_result(archive: Archive, *, format: str, limits=None) -> dict:
         "source":source,
         "stages":stage,
         "coreContract":"v0.5.0",
+        "targetCoreContract":"v0.6.0",
+        "coreMappingStatus":"not-validated",
         "coreModel":None,
         "sourceViews":{"nodes":[],"frames":[],"materials":[],"sections":[],
                        "frameSectionAssignments":[],"restraints":[],"springs":[],
