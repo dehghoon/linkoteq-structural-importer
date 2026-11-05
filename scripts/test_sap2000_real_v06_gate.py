@@ -40,9 +40,12 @@ def run():
     assert "sourceLoads" in report["importFidelity"]
     levels = report["importFidelity"]["sourceLevelAudit"]
     assert not levels["coreLevelMappingValidated"]
+    assert "FUNCTION - TIME HISTORY - USER" not in levels["levelTableCounts"]
+    assert levels["sourceRecordCount"] == 0
     print("SAP_V06_SOURCE_LEVEL_TABLES", levels["levelTableCounts"], levels["sourceRecordCount"], levels["sourceRecords"][:3])
     grids = report["importFidelity"]["sourceGridAudit"]
     assert not grids["coreGridMappingValidated"]
+    assert grids["gridTableCounts"]["GRID LINES"] == 31
     print("SAP_V06_SOURCE_GRID_TABLES", grids["gridTableCounts"], grids["sourceRecordCount"], grids["sourceRecords"][:3])
     unparsed = report["importFidelity"]["unparsedDistributedLoadDiagnostics"]
     assert unparsed["preservedOnlyCount"] == 0
