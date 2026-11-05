@@ -37,6 +37,12 @@ def main():
             raise AssertionError("MUST_REJECT_WRONG_CORE_TARGET")
         assert archive.retrieve()==source
         assert result["coreModel"] is None
+        inventory=result["fidelityInventory"]
+        assert inventory["canonicalMappingValidated"] is False
+        assert inventory["sourceHash"] == result["source"]["sourceHash"]
+        assert len(inventory["records"]) == sum(len(v) for v in result["sourceViews"].values())
+        assert all(r["status"] == "preserved-only" for r in inventory["records"])
+        assert inventory["unparsedSourceCoverage"] == "unknown-original-bytes-preserved"
         if fmt=="sap2000":
             assert len(result["sourceViews"]["frameEndReleaseSemantics"])==1
             release=result["sourceViews"]["frameEndReleaseSemantics"][0]
