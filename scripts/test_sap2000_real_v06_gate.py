@@ -88,6 +88,9 @@ def run():
     assert si_loads["sourceUnits"] == "KN, m, C"
     assert len(si_loads["nodalLoadsSI"]) == 2
     assert len(si_loads["distributedMagnitudeCandidatesSI"]) == 1810
+    assert sum(x["sourceLoadType"].casefold() == "moment" for x in si_loads["distributedMagnitudeCandidatesSI"]) == 196
+    assert all(x["magnitudeUnit"] == "N*m/m" and x["siMagnitudeCandidates"] is not None
+               for x in si_loads["distributedMagnitudeCandidatesSI"] if x["sourceLoadType"].casefold() == "moment")
     assert not si_loads["coreMappingValidated"]
     assert not si_loads["localDirectionTransformsValidated"]
     assert all(x["siMagnitudeCandidates"] is None or x["magnitudeUnit"] in ("N/m", "N*m/m")
