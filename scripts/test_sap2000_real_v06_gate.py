@@ -37,6 +37,16 @@ def run():
     assert report["importFidelity"]["materialIdentityResolution"]["resolvedMaterialCount"] == 54
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
+    assert "frameLocalAxes" in report["importFidelity"]
+    assert "diaphragmConstraints" in report["importFidelity"]
+    assert not report["importFidelity"]["frameLocalAxes"]["mappedToCore"]
+    assert not report["importFidelity"]["diaphragmConstraints"]["mappedToCore"]
+    print("SAP_V06_AXES_DIAPHRAGMS", {
+        "axisRotations": len(report["importFidelity"]["frameLocalAxes"]["rotations"]),
+        "insertions": len(report["importFidelity"]["frameLocalAxes"]["insertions"]),
+        "diaphragmDefinitions": len(report["importFidelity"]["diaphragmConstraints"]["definitions"]),
+        "diaphragmMemberships": len(report["importFidelity"]["diaphragmConstraints"]["memberships"]),
+    })
     assert report["targetSchemaVersion"] == "0.6"
     assert report["status"] == "blocked"
     assert report["coreModel"] is None
