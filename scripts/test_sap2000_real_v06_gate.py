@@ -38,6 +38,9 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    levels = report["importFidelity"]["sourceLevelAudit"]
+    assert not levels["coreLevelMappingValidated"]
+    print("SAP_V06_SOURCE_LEVEL_TABLES", levels["levelTableCounts"], levels["sourceRecordCount"], levels["sourceRecords"][:3])
     grids = report["importFidelity"]["sourceGridAudit"]
     assert not grids["coreGridMappingValidated"]
     print("SAP_V06_SOURCE_GRID_TABLES", grids["gridTableCounts"], grids["sourceRecordCount"], grids["sourceRecords"][:3])
