@@ -38,6 +38,13 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    vectors = report["importFidelity"]["globalDistributedVectorCandidates"]
+    assert len(vectors["vectorCandidates"]) == 528
+    assert len(vectors["deferredLoads"]) == 1086
+    assert all(x["sourceDirection"].upper() in ("Y", "Z") for x in vectors["vectorCandidates"])
+    assert all(x["direction"] == "Gravity" for x in vectors["deferredLoads"])
+    assert not vectors["gravitySignVerified"] and not vectors["mappedToCore"]
+    print("SAP_V06_GLOBAL_LOAD_VECTORS", len(vectors["vectorCandidates"]), len(vectors["deferredLoads"]))
     direction_audit = report["importFidelity"]["distributedLoadDirectionAudit"]
     assert direction_audit["recordCount"] == 1614
     assert not direction_audit["globalVectorMappingValidated"]
