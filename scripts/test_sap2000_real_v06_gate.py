@@ -13,6 +13,7 @@ from linkoteq_importer.sap2000_nonprismatic import extract_nonprismatic_segments
 from linkoteq_importer.sap2000_nonprismatic_references import audit_nonprismatic_end_sections
 from linkoteq_importer.sap2000_nonprismatic_materials import resolve_nonprismatic_member_materials
 from linkoteq_importer.sap2000_v06_material_reconciliation import reconcile_tapered_material_diagnostics
+from linkoteq_importer.sap2000_none_sections import audit_none_section_assignments
 
 def run():
     data = Path("docs/MTDENN~1.$2k").read_bytes()
@@ -81,6 +82,12 @@ def run():
     assert all(item.startswith("UNKNOWN_SECTION:") for item in reconciliation["outstandingUnresolvedReferences"])
     assert not reconciliation["analysisReady"] and not reconciliation["canonicalCoreValidated"]
     print("SAP_V06_MATERIAL_RECONCILIATION", {k: reconciliation[k] for k in ("originalUnresolvedCount", "resolvedMaterialCount", "remainingReferenceCount", "nonprismaticSectionStatus")})
+    none_sections = audit_none_section_assignments(properties, geometry)
+    assert none_sections["count"] == 4
+    assert all(item["frameExists"] for item in none_sections["records"])
+    assert all(item["sourceSectionValue"] == "None" for item in none_sections["records"])
+    assert not none_sections["analysisReady"]
+    print("SAP_EXPLICIT_NONE_SECTIONS", none_sections["records"])
     assert archive.retrieve() == data
     print("PASS SAP2000 Core v0.6 combined gate", report["counts"],
           "blockerTypes", report["blockers"]["byCode"])
