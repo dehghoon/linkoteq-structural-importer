@@ -28,6 +28,8 @@ def validate_import_result(result: dict) -> tuple[str, ...]:
     require(result.get("contract") == "linkoteq.import-result", "UNKNOWN_CONTRACT")
     require(result.get("version") == "0.1.0", "UNSUPPORTED_VERSION")
     require(result.get("coreContract") == "v0.5.0", "UNSUPPORTED_CORE_BASELINE")
+    require(result.get("targetCoreContract") == "v0.6.0", "UNSUPPORTED_TARGET_CORE")
+    require(result.get("coreMappingStatus") == "not-validated", "UNVERIFIED_CORE_MAPPING_STATUS")
     require(result.get("sourceFormat") in FORMATS, "UNKNOWN_SOURCE_FORMAT")
     source = result.get("source")
     require(isinstance(source, dict), "SOURCE_NOT_OBJECT")
