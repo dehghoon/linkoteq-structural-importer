@@ -38,6 +38,11 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    combination_graph = report["importFidelity"]["combinationGraphAudit"]
+    assert combination_graph["combinationCount"] == 48
+    assert combination_graph["caseCount"] == 11
+    assert not combination_graph["coreLinearMappingValidated"]
+    print("SAP_V06_COMBINATION_GRAPH", {"edges": combination_graph["dependencyEdges"], "issues": combination_graph["issues"][:10]})
     load_reference_audit = report["importFidelity"]["loadReferenceAudit"]
     assert load_reference_audit["counts"]["distributedFrameLoads"] == 1614
     assert not load_reference_audit["unitsVerified"]
