@@ -1,7 +1,7 @@
 name: SAP2000 engineering geometry fixture
 on:
   push:
-    branches: [gpt2/sap2000-engineering-geometry]
+    branches: [gpt2/sap2000-engineering-geometry, gpt2/core-v06-sap-migration]
   pull_request:
     paths:
       - 'src/linkoteq_importer/sap2000_geometry.py'
