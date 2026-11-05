@@ -25,6 +25,16 @@ def main():
         archive=make(source,ext)
         result=build_import_result(archive,format=fmt,limits=LIMITS)
         warnings=validate_import_result(result)
+        assert result["targetCoreContract"] == "v0.6.0"
+        assert result["coreMappingStatus"] == "not-validated"
+        assert result["coreContract"] == "v0.5.0"  # legacy transport, not a v0.6 canonical model
+        rejected={**result,"targetCoreContract":"v0.5.0"}
+        try:
+            validate_import_result(rejected)
+        except ImportResultContractError as exc:
+            assert str(exc)=="UNSUPPORTED_TARGET_CORE"
+        else:
+            raise AssertionError("MUST_REJECT_WRONG_CORE_TARGET")
         assert archive.retrieve()==source
         assert result["coreModel"] is None
         if fmt=="sap2000":
