@@ -11,7 +11,7 @@ Source of truth: importer branch `gpt2/core-v06-sap-migration`; real fixture `do
 3. Display unresolved member sections as **unresolved**, not as an invented default. Four assignments refer to `None`; nonprismatic `Tapered Beam` is not an analytical Core section.
 4. Keep original archive bytes, source hash, provenance, and the complete `importFidelity` report associated with the preview. The parser now extracts 1,810 distributed load records: 1,614 forces plus 196 distributed moments; parsing is **not** Core load mapping.
 5. Make all non-certified domains visible as preserved metadata or warnings; do not imply analysis validity.
-6. Include `sourceGridAudit` and `sourceLevelAudit` from `importFidelity`. Preserve source-defined grid labels, story/level names and elevations as raw records until coordinate semantics are validated. Do not infer source stories from node Z values or silently fabricate grid labels.
+6. Include `sourceGridAudit`, `sourceGridPreview`, and `sourceLevelAudit` from `importFidelity`. The pinned SAP fixture has 31 source `GRID LINES` records; the display-only preview supplies `gridLines` and `deferredGridLines` separately. The fixture has no explicit STORY/LEVEL tables after excluding unrelated TIME HISTORY records. Preserve source-defined grid labels, story/level names and elevations as raw records until coordinate semantics are validated. Any Z-derived levels must be clearly labeled inferred, not source-defined.
 
 ## Integration guardrails
 
