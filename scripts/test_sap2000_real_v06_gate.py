@@ -38,6 +38,9 @@ def run():
     assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
     assert report["importFidelity"]["coreModel"] is None
     assert "sourceLoads" in report["importFidelity"]
+    unparsed = report["importFidelity"]["unparsedDistributedLoadDiagnostics"]
+    assert unparsed["preservedOnlyCount"] == 196
+    print("SAP_V06_UNPARSED_LOAD_REASONS", unparsed["reasonCounts"], unparsed["examples"])
     completeness = report["importFidelity"]["distributedLoadSourceCompleteness"]
     assert completeness["reconciled"]
     print("SAP_V06_RAW_DISTRIBUTED_ROWS", completeness["rawRowCount"], completeness["parsedCount"], completeness["preservedOnlyCount"])
