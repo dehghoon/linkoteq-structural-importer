@@ -1,0 +1,16 @@
+name: GPT3 SAP2000 Upload API
+on:
+  push:
+    branches: [feature/gpt3-sap2000-upload-api]
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-gpt3-api.txt
+      - run: PYTHONPATH=src python -c "from linkoteq_importer.gpt3_upload_api import app; assert app is not None"
+      - run: PYTHONPATH=src python scripts/test_sap2000_gpt3_package.py
