@@ -31,8 +31,12 @@ def run():
     partial = build_partial_model(geometry, properties, stress_unit="kPa",
                                   density_unit="kg/m3", length_unit="m")
     report = build_sap2000_v06_gate_report(partial, geometry, boundaries,
-                                           project_id="real-sap-fixture")
+                                           project_id="real-sap-fixture", archive=archive, properties=properties)
     assert report["sourceHash"] == digest
+    assert report["importFidelity"]["sourceHash"] == digest
+    assert report["importFidelity"]["materialIdentityResolution"]["resolvedMaterialCount"] == 54
+    assert report["importFidelity"]["explicitNoneSectionAssignments"]["count"] == 4
+    assert report["importFidelity"]["coreModel"] is None
     assert report["targetSchemaVersion"] == "0.6"
     assert report["status"] == "blocked"
     assert report["coreModel"] is None
