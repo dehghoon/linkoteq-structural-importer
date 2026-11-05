@@ -10,6 +10,7 @@ from linkoteq_importer.sap2000_geometry import extract_geometry
 from linkoteq_importer.sap2000_properties import extract_properties
 from linkoteq_importer.partial_structural_model import build_partial_model
 from linkoteq_importer.core_v06_candidate import project_geometry_properties_v06
+from linkoteq_importer.core_v06_blockers import classify_blockers
 
 EXPECTED = "8e31922f93485aaad44f6fae2288d29f2b9f68fdfcc158eab6af557917a5ff79"
 
@@ -37,6 +38,10 @@ def run():
     if result["status"] == "blocked":
         assert result["candidate"] is None
         assert result["diagnostics"]
+        classified = classify_blockers(result["diagnostics"])
+        assert classified["total"] == len(result["diagnostics"])
+        assert classified["unresolved"]
+        print("SAP_V06_BLOCKER_REPORT", classified["byCode"])
         print("PASS real SAP fixture blocked on unresolved engineering data:",
               len(result["diagnostics"]), "diagnostics")
     else:
