@@ -87,13 +87,20 @@ def extract_advanced_loads(archive: Archive) -> AdvancedLoadView:
             else:
                 diagnostics.append(f"UNSUPPORTED_DISTANCE_TYPE:{record.line}:{distance_type}")
                 continue
-            if "foverla" not in f or "foverlb" not in f:
+            if load_type.casefold() == "force":
+                ma, mb = "foverla", "foverlb"
+            elif load_type.casefold() == "moment":
+                ma, mb = "moverla", "moverlb"
+            else:
+                diagnostics.append(f"DISTRIBUTED_LOAD_TYPE_UNSUPPORTED:{record.line}:{load_type}")
+                continue
+            if ma not in f or mb not in f:
                 diagnostics.append(f"DISTRIBUTED_LOAD_MAGNITUDE_UNSUPPORTED:{record.line}")
                 continue
             distributed.append(DistributedFrameLoad(
                 frame, pattern, system, load_type, direction, distance_type,
                 _number(f, a, record.line), _number(f, b, record.line),
-                _number(f, "foverla", record.line), _number(f, "foverlb", record.line),
+                _number(f, ma, record.line), _number(f, mb, record.line),
                 record.line))
             if system.casefold() != "global":
                 diagnostics.append(f"FRAME_LOAD_COORDINATE_TRANSFORM_REQUIRED:{record.line}")
