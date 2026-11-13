@@ -8,7 +8,17 @@ from .preservation import ArchiveError
 def extract_area_preview(archive) -> dict:
     areas = []
     seen = set()
+    section_assignments = {}
     for record in iter_records(archive):
+        if record.table == "AREA SECTION ASSIGNMENTS":
+            fields = _unique(record)
+            area_id = fields.get("area")
+            if not area_id or area_id in section_assignments:
+                raise ArchiveError(f"SAP_DUPLICATE_OR_MISSING_AREA_SECTION:{record.line}")
+            section_assignments[area_id] = {"section": fields.get("section"),
+                                            "materialProperty": fields.get("matprop"),
+                                            "sourceLine": record.line}
+            continue
         if record.table != "CONNECTIVITY - AREA":
             continue
         fields = _unique(record)
@@ -24,4 +34,6 @@ def extract_area_preview(archive) -> dict:
             raise ArchiveError(f"SAP_INVALID_AREA_BOUNDARY:{record.line}:{area_id}")
         areas.append({"sourceId": area_id, "boundaryNodeIds": joint_ids,
                       "sourceLine": record.line, "sourceGuid": fields.get("guid"), "geometryOnly": True})
+    for area in areas:
+        area["sourceSectionAssignment"] = section_assignments.get(area["sourceId"])
     return {"areas": areas, "analysisReady": False, "mappingValidated": False}
