@@ -23,6 +23,21 @@ def run() -> None:
     assert len(geometry["nodes"]) == 388
     assert len(geometry["members"]) == 609
     assert all(member["renderable"] for member in geometry["members"])
+    # Every source Area must survive the handoff with ordered boundary references,
+    # source identity, and section assignment (if present). Do not certify it.
+    areas = geometry["areas"]
+    source_area_ids = [area["sourceId"] for area in areas]
+    assert len(source_area_ids) == len(set(source_area_ids))
+    known_node_ids = {node["sourceId"] for node in geometry["nodes"]}
+    for area in areas:
+        boundary = area["boundaryNodeIds"]
+        assert len(boundary) >= 3
+        assert len(boundary) == len(set(boundary))
+        assert set(boundary) <= known_node_ids
+        assert area["geometryOnly"] is True
+        assert "sourceGuid" in area
+        assert "sourceSectionAssignment" in area
+    assert not package["canonicalMappingValidated"]
     grids = geometry["grids"]
     assert len(grids["gridLines"]) + len(grids["deferredGridLines"]) == 31
     assert geometry["sourceLevels"]["sourceRecordCount"] == 0
@@ -37,6 +52,7 @@ def run() -> None:
     assert decoded["sourceHash"] == expected_hash
     assert decoded["coreModel"] is None
     assert len(decoded["geometryPreview"]["members"]) == 609
+    assert decoded["geometryPreview"]["areas"] == areas
     assert len(decoded["engineeringData"]["sourceLoads"]["distributedFrameLoads"]) == 1810
     print("SAP_GPT3_HANDOFF_PASS", len(encoded), len(grids["gridLines"]),
           len(grids["deferredGridLines"]), len(geometry["inferredLevels"]))
