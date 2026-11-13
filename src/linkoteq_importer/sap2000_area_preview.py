@@ -23,5 +23,5 @@ def extract_area_preview(archive) -> dict:
         if len(joint_ids) < 3 or len(set(joint_ids)) != len(joint_ids):
             raise ArchiveError(f"SAP_INVALID_AREA_BOUNDARY:{record.line}:{area_id}")
         areas.append({"sourceId": area_id, "boundaryNodeIds": joint_ids,
-                      "sourceLine": record.line, "geometryOnly": True})
+                      "sourceLine": record.line, "sourceGuid": fields.get("guid"), "geometryOnly": True})
     return {"areas": areas, "analysisReady": False, "mappingValidated": False}
