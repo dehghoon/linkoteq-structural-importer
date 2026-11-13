@@ -12,6 +12,7 @@ from typing import Any
 
 from linkoteq_importer.preservation import Limits, archive_bytes
 from linkoteq_importer.sap2000_geometry import extract_geometry
+from linkoteq_importer.sap2000_area_preview import extract_area_preview
 from linkoteq_importer.sap2000_properties import extract_properties
 from linkoteq_importer.sap2000_boundary import extract_boundaries
 from linkoteq_importer.partial_structural_model import build_partial_model
@@ -44,6 +45,7 @@ def build_gpt3_package(data: bytes, *, filename: str, project_id: str,
                             project_ref=project_id, namespace="sap2000",
                             policy_id="preserve-source", limits=limits)
     geometry = extract_geometry(archive)
+    area_preview = extract_area_preview(archive)
     properties = extract_properties(archive)
     boundaries = extract_boundaries(archive)
     partial = build_partial_model(geometry, properties, stress_unit="kPa",
@@ -80,6 +82,7 @@ def build_gpt3_package(data: bytes, *, filename: str, project_id: str,
             "coordinatesConvertedToSI": False,
             "nodes": nodes,
             "members": members,
+            "areas": area_preview["areas"],
             "grids": fidelity["sourceGridPreview"],
             "sourceLevels": fidelity["sourceLevelAudit"],
             "inferredLevels": inferred_levels,
