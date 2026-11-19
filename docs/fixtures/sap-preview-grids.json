@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1.0",
+  "case_id": "sap-preview-grid-identifiers",
+  "format": "SAP2000",
+  "source_application": "synthetic tabular fixture",
+  "source_file": "tests/test_sap_preview_grids.py",
+  "access_permission": "repository-owned synthetic data",
+  "oracle": {
+    "type": "literal fixture expectations",
+    "reference": "GLOBAL X GridID=K remains K; GLOBAL Y without GridID gets explicit unnamed status; LOCAL stays deferred",
+    "reviewed_by": "automated regression, pending independent review"
+  },
+  "expected": {
+    "entities": {"preview_grid_lines": 2, "deferred_grid_lines": 1},
+    "field_assertions": ["sourceIdentifierMissing", "displayLabel", "byte-exact source archive"],
+    "diagnostics": ["GRID_COORDINATE_SEMANTICS_UNSUPPORTED for LOCAL"]
+  },
+  "tolerances": {"source_decimal": "exact", "converted_by_dimension": {}},
+  "capabilities": {"geometry": "PASS at source preview level", "core": "NOT_IMPLEMENTED analytical mapping", "ifc": "NOT_IMPLEMENTED"},
+  "ci": {"command": "PYTHONPATH=src python -m pytest -q", "run_url": "PR #4 checks"},
+  "notes": "Private SCIENC is tested locally through SCIENC_FIXTURE and is excluded from the repository. Its 27 source grids comprise 22 X/Y lines and five Z elevation grids."
+}
