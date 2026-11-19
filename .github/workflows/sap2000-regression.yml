@@ -1,0 +1,23 @@
+name: SAP2000 importer regression
+on:
+  push:
+    branches: [gpt2/core-v06-sap-migration]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  importer:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run checked-in SAP2000 integration fixture
+        env:
+          PYTHONPATH: src
+        run: python scripts/test_sap2000_gpt3_package.py
+      - name: Run optional private real-file regression
+        if: ${{ false }}
+        run: echo 'Real fixture must be supplied through an approved private mechanism; never commit client data.'
